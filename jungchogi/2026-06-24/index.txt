@@ -1,98 +1,19 @@
 3:I[4707,[],""]
 6:I[6423,[],""]
+7:I[2972,["972","static/chunks/972-b08313117faa6bb1.js","572","static/chunks/572-88728c89ea21bb88.js","621","static/chunks/app/%5Bcategory%5D/%5Bslug%5D/page-6dc320cafa77b70b.js"],""]
 4:["category","jungchogi","d"]
 5:["slug","2026-06-24","d"]
-0:["boEObsJOEj--1EjbcBNY2",[[["",{"children":[["category","jungchogi","d"],{"children":[["slug","2026-06-24","d"],{"children":["__PAGE__?{\"category\":\"jungchogi\",\"slug\":\"2026-06-24\"}",{}]}]}]},"$undefined","$undefined",true],["",{"children":[["category","jungchogi","d"],{"children":[["slug","2026-06-24","d"],{"children":["__PAGE__",{},[["$L1","$L2",null],null],null]},[null,["$","$L3",null,{"parallelRouterKey":"children","segmentPath":["children","$4","children","$5","children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","notFoundStyles":"$undefined"}]],null]},[null,["$","$L3",null,{"parallelRouterKey":"children","segmentPath":["children","$4","children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","notFoundStyles":"$undefined"}]],null]},[[[["$","link","0",{"rel":"stylesheet","href":"/til/_next/static/css/6b24e9f95eb35963.css","precedence":"next","crossOrigin":"$undefined"}]],["$","html",null,{"lang":"ko","children":["$","body",null,{"children":["$","$L3",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":"404"}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],"notFoundStyles":[]}]}]}]],null],null],["$L7",null]]]]
-8:I[3572,["448","static/chunks/448-7730ef5cb0d2c100.js","572","static/chunks/572-c7c09ef78bd8ad5c.js","621","static/chunks/app/%5Bcategory%5D/%5Bslug%5D/page-2b8bf0be33ec270d.js"],"default"]
-b:I[2972,["448","static/chunks/448-7730ef5cb0d2c100.js","572","static/chunks/572-c7c09ef78bd8ad5c.js","621","static/chunks/app/%5Bcategory%5D/%5Bslug%5D/page-2b8bf0be33ec270d.js"],""]
-9:T7c9,- **연관 과목:** [[과목3_데이터베이스 구축]] [[과목4_프로그래밍 언어 활용]]
-- **세부 단원:** #물리DB설계 #트랜잭션  
-- **상태**: #1회차 
-
----
-
-### ❌ 틀린 문제 & 깨달은 점
-
-> 문제 통째로 적지 말고, '내가 몰랐던 개념/핵심'만 한 줄로 요약
-
-1. 지연 갱신 VS 즉각 갱신
-   - **헷갈린 점:** 용어가 헷갈림 기억이 안 남
-   - **한줄 정리:** 지연 갱신은 완료될 때 까지 기다림, 즉각 갱신은 바로 개입함
-   - **연결 개념:** 로그 기반 회복 - 데이터베이스 변경 사항 로그 파일에 순차 기록,
-			장애 발생 시 복구
-
-2. 그림자 페이징
-   - **헷갈린 점:** 수정 시 원본(그림자) 페이지 안 건드리고 새 페이지에 기록한다. 현재 페이지 테이블만 새 페이지를 가리킨다.
-   - **한줄 정리:** 그림자페이지는 원본을 꼬옥 갖고있어주면 돼~ 든든한 백업
-   - **연결 개념:** 페이지 - 데이터 묶음
-			페이지 테이블 - 주소록(몇 번 페이지 디스크 어디에 저장되있는지 적어둔 표)
-
-3. SQL문
-   - **헷갈린 점:** 그냥 모든게 다 헷갈림 처음부터 다시 읽으면서 문제 풀어야 함
-   - **한줄 정리:** DDL 정의어 ALTER 테이블 DML 조작어 SELECT 데이터 DCL 제어어 GRANT 권한
-   - **연결 개념:** CONSTRAINT FOREIGN KEY REFERENCES
-
- 4. 데이터 정의어 조작어 제어어 헷갈림
-   - **헷갈린 점:** DELETE나 DROP이나 ALTER나... 뭐랄까 뭐가 뭔지 모르겠달까
-   - **한줄 정리:** DDL 정의어 ALTER 테이블 DML 조작어 SELECT 데이터 DCL 제어어 GRANT 권한
-   - **연결 개념:** CASCADE / RESTRICT -> 연쇄 회수/회수 거부(옵션 생략 시 기본) 
-
-### 📝 온라인 문제 풀이 피드백
-
-- **정답/ 오늘 푼 문제 수**: 2/10(SQL), 7/10(논리DB, 물리DB) -> 3번 품, 5/10(DB 전체)  
-- **내일 집중해서 볼 파트**: SQL, 코딩 기초, JAVA, PYTHON, C
-a:T991,- **연관 과목:** [[과목3_데이터베이스 구축]]
-- **세부 단원:** #논리DB설계 #물리DB설계
-- **상태**: #1회차
-
----
-
-### ❌ 틀린 문제 & 깨달은 점
-
-1. 디비젼(**A÷B**)
-   - **헷갈린 점:** B 릴레이션의 **모든 값**과 짝을 이루는 A의 값만 골라내라.
-   - **한줄 정리:** **모든 값**과 짝을 이뤄야 함. 그 중 몇 개만 만족 X
-   - **연결 개념:** #관계대수연산자
-
-2. 데이터 모델 3가지 구성요소
-   - **헷갈린 점:** 구조, 연산, 제약조건 개념 자체
-   - **한줄 정리:** 구조는 어떻게 나타낼 것인지 표현, 연산은 데이터 처리 작업 명세, 제약조건은 데이터 무결성 유지를 위한 제약
-   - **연결 개념:** #데이터모델
-
-3. 교집합∩과 조인**⋈**
-   - **헷갈린 점:** 개념 차이
-   - **한줄 정리:** 교집합은 위아래로 합침(공통된 행 찾아내기), 조인은 옆으로 붙임(새로운 정보 만들기)
-   - **연결 개념:** 합집합 u, 차집합 -, 카티션 프로덕트 x (행렬) #관계대수연산자 
-
-4. 정규형 
-   - **헷갈린 점:** 개념
-   - **한줄 정리:** 1) 하나셀 단일값만 2) 기본키 2개 이상일 때 3) 기본키 아닌 놈들끼리 꼬리물기 분리해서 제거 4) BCNF 결정자(식별자)인데 후보키(유일, 최소)가 아니라면 쪼개기 
-   - **연결 개념:** 유일성(중복 금지), 최소성(군더더기 금지) #정규화 
-
-5. 해싱 접근
-  - **헷갈린 점:** 해싱 접근, 해시 충돌, 해시 주소, 해시 함수 -> 용어
-  - **한줄 정리:** "해싱 접근"외 다 해시
-  - **연결 개념:** 레드 블랙 트리 체이닝(Java) #레드블랙트리
-
-6. 관계 대수 vs 관계 해석
-  - **헷갈린 점:** 관점따라 도메인의 뜻이 다름, 관계 대수 - 어떻게 계산할까? How 관계 해석 - 어떤 데이터? What
-  - **한줄 정리:**
-	실무-이름표: 이 데이터는 무슨 정보인가?
-	수학-울타리: 이 칸에 어떤 값만 들어올 수 있나?
-	관계 해석-빈칸(x,y): 도메인 변수 조건식 짤 때 이 칸의 값을 뭐라고 부를까?
-  - **연결 개념:** 절차적 언어(관계 대수), 비절차적 언어(관계 해석, SQL)
-
-### 📝 온라인 문제 풀이 피드백
-
-- **내일 집중해서 볼 파트**: 데이터베이스 물리 DB 설계, 트랜잭션
-- 문제를 꼼꼼히 보지 않는 습관!! -> 밑줄 치거나 쓰면서 생각
-c:T99c,<ul>
+0:["Hou0LEYnYlC7L0PA7Krqu",[[["",{"children":[["category","jungchogi","d"],{"children":[["slug","2026-06-24","d"],{"children":["__PAGE__?{\"category\":\"jungchogi\",\"slug\":\"2026-06-24\"}",{}]}]}]},"$undefined","$undefined",true],["",{"children":[["category","jungchogi","d"],{"children":[["slug","2026-06-24","d"],{"children":["__PAGE__",{},[["$L1","$L2",null],null],null]},[null,["$","$L3",null,{"parallelRouterKey":"children","segmentPath":["children","$4","children","$5","children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","notFoundStyles":"$undefined"}]],null]},[null,["$","$L3",null,{"parallelRouterKey":"children","segmentPath":["children","$4","children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","notFoundStyles":"$undefined"}]],null]},[[[["$","link","0",{"rel":"stylesheet","href":"/til/_next/static/css/7cb0e4bf2914e20b.css","precedence":"next","crossOrigin":"$undefined"}]],["$","html",null,{"lang":"ko","children":["$","body",null,{"children":["$","$L3",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":["$","div",null,{"style":{"minHeight":"100vh","background":"linear-gradient(160deg, #c8eaf7 0%, #dff3fa 100%)","display":"flex","alignItems":"center","justifyContent":"center","fontFamily":"'IM Hyemin', sans-serif"},"children":["$","div",null,{"style":{"background":"#fffdf7","border":"2px solid #A8D3E5","borderRadius":16,"padding":"48px 40px","textAlign":"center","maxWidth":400,"boxShadow":"0 4px 24px rgba(36,120,168,0.12)"},"children":[["$","div",null,{"style":{"fontSize":"4rem","marginBottom":12},"children":"( ˘•ω•˘ )"}],["$","h1",null,{"style":{"fontFamily":"'Kkukkukk', sans-serif","fontSize":"1.6rem","color":"#174A70","marginBottom":8},"children":"앗, 존재하지 않는 방이에요."}],["$","p",null,{"style":{"color":"#607D8B","fontSize":"0.9rem","marginBottom":24,"lineHeight":1.7},"children":["주소가 바뀌었거나 삭제된 기록일 수 있어요.",["$","br",null,{}],"빈 노트만 있는 방이네요... 🗒️"]}],["$","div",null,{"style":{"display":"flex","gap":10,"justifyContent":"center","flexWrap":"wrap"},"children":["$","$L7",null,{"href":"/","style":{"padding":"8px 20px","background":"#2478A8","color":"#fff","borderRadius":20,"textDecoration":"none","fontSize":"0.88rem"},"children":"메인으로 돌아가기"}]}]]}]}],"notFoundStyles":[]}]}]}]],null],null],["$L8",null]]]]
+9:I[3572,["972","static/chunks/972-b08313117faa6bb1.js","572","static/chunks/572-88728c89ea21bb88.js","621","static/chunks/app/%5Bcategory%5D/%5Bslug%5D/page-6dc320cafa77b70b.js"],"default"]
+a:I[3871,["972","static/chunks/972-b08313117faa6bb1.js","572","static/chunks/572-88728c89ea21bb88.js","621","static/chunks/app/%5Bcategory%5D/%5Bslug%5D/page-6dc320cafa77b70b.js"],"default"]
+c:I[2355,["972","static/chunks/972-b08313117faa6bb1.js","572","static/chunks/572-88728c89ea21bb88.js","621","static/chunks/app/%5Bcategory%5D/%5Bslug%5D/page-6dc320cafa77b70b.js"],"default"]
+b:T9ea,<ul>
 <li><strong>연관 과목:</strong> [[과목3_데이터베이스 구축]] [[과목4_프로그래밍 언어 활용]]</li>
 <li><strong>세부 단원:</strong> #물리DB설계 #트랜잭션</li>
 <li><strong>상태</strong>: #1회차</li>
 </ul>
 <hr>
-<h3>❌ 틀린 문제 &#x26; 깨달은 점</h3>
+<h3 id="-틀린-문제-x26-깨달은-점">❌ 틀린 문제 &#x26; 깨달은 점</h3>
 <blockquote>
 <p>문제 통째로 적지 말고, '내가 몰랐던 개념/핵심'만 한 줄로 요약</p>
 </blockquote>
@@ -132,11 +53,11 @@ c:T99c,<ul>
 <li><strong>한줄 정리:</strong> DDL 정의어 ALTER 테이블 DML 조작어 SELECT 데이터 DCL 제어어 GRANT 권한</li>
 <li><strong>연결 개념:</strong> CASCADE / RESTRICT -> 연쇄 회수/회수 거부(옵션 생략 시 기본)</li>
 </ul>
-<h3>📝 온라인 문제 풀이 피드백</h3>
+<h3 id="-온라인-문제-풀이-피드백">📝 온라인 문제 풀이 피드백</h3>
 <ul>
 <li><strong>정답/ 오늘 푼 문제 수</strong>: 2/10(SQL), 7/10(논리DB, 물리DB) -> 3번 품, 5/10(DB 전체)</li>
 <li><strong>내일 집중해서 볼 파트</strong>: SQL, 코딩 기초, JAVA, PYTHON, C</li>
 </ul>
-2:["$","$L8",null,{"categories":[{"label":"정처기","folder":"01 정처기","slug":"jungchogi","icon":"📝"},{"label":"코테","folder":"02 코테","slug":"kote","icon":"💻"},{"label":"오픽","folder":"03 오픽","slug":"opic","icon":"🎤"}],"postsByCategory":{"jungchogi":[{"category":"정처기","categorySlug":"jungchogi","categoryIcon":"📝","file":"2026-06-24 물리DB설계, 트랜잭션, SQL문 1회독.md","slug":"2026-06-24","title":"2026-06-24 물리DB설계, 트랜잭션, SQL문 1회독","displayTitle":"물리DB설계, 트랜잭션, SQL문 1회독","date":"2026-06-24","content":"$9","frontmatter":{}},{"category":"정처기","categorySlug":"jungchogi","categoryIcon":"📝","file":"2026-06-23 데이터베이스 논리+물리0.5.md","slug":"2026-06-23","title":"2026-06-23 데이터베이스 논리+물리0.5","displayTitle":"데이터베이스 논리+물리0.5","date":"2026-06-23","content":"$a","frontmatter":{}}],"kote":[{"category":"코테","categorySlug":"kote","categoryIcon":"💻","file":"2026-06-22 프로그래머스 12390 문자열 뒤집기 (Lv.0).md","slug":"2026-06-22","title":"2026-06-22 프로그래머스 12390 문자열 뒤집기 (Lv.0)","displayTitle":"프로그래머스 12390 문자열 뒤집기 (Lv.0)","date":"2026-06-22","content":"# 2026-06-22 프로그래머스 12390 문자열 뒤집기 (Lv.0) example\n\n- **자료구조/알고리즘:** [[자료구조_문자열]], [[자료구조_배열]]\n- **핵심 메서드:** split → reverse → join 패턴\n- **상태**: #성공\n---\n\n### 💻 내 풀이\n```javascript\nfunction solution(my_string) {\n    return my_string.split('').reverse().join('');\n}\n```\n\n### 💡 다른 사람의 풀이 보고 배운 점\n\n> 스프레드 연산자로 더 짧게 쓸 수 있음\n\n```javascript\nfunction solution(my_string) {\n    return [...my_string].reverse().join('');\n}\n```\n\n### ⚠️ 자주 하는 실수 / 기억할 것\n- `reverse()`는 배열에만 쓸 수 있음 → 문자열은 반드시 `split('')` 후 사용\n- `split('')`과 `[...str]`은 동일 결과 → 스프레드가 더 모던한 스타일\n","frontmatter":{}}],"opic":[{"category":"오픽","categorySlug":"opic","categoryIcon":"🎤","file":"2026-06-22 카페 묘사 example.md","slug":"2026-06-22","title":"2026-06-22 카페 묘사 example","displayTitle":"카페 묘사 example","date":"2026-06-22","content":"# 2026-06-22 카페 묘사 example\n\n- **질문 유형:** [[유형1_현재 상태 및 묘사]]\n- **주제:** #카페 \n\n## 🎭 오늘의 Topic & Question\n\n- **주제**: 카페 (Café)\n- **질문 핵심**: 자주 가는 카페를 묘사하고, 거기서 주로 무엇을 하는지 설명해라.\n\n## ✍️ 나만의 만능 스크립트 (핵심 문장 3~4개)\n\n- There is a café I really love near my place. It's cozy and not too crowded, which I really appreciate.\n- Whenever I go there, I usually order an Americano and find a quiet corner to study or just relax.\n- What I love most about it is the warm lighting and the soft background music. It really helps me focus.\n- I try to visit at least two or three times a week. It has kind of become my go-to place to recharge.\n\n## 🗣️ 유용한 표현 & 필러 (Filler Words)\n\n- **You know what?** — 자연스러운 화제 전환\n- **What I mean is...** — 설명 보충할 때\n- **I'd say...** — 의견 말할 때 부드럽게\n\n## 🎧 피드백 (녹음 모니터링)\n\n- **오늘의 발음/억양 교정**: \"cozy\" 발음 — /ˈkoʊzi/ 주의\n- **말하기 누적 시간**: 총 15분 녹음 완료!\n","frontmatter":{}}]},"totalPostCount":4,"latestDate":"2026-06-24","children":["$","article",null,{"children":[["$","div",null,{"className":"post-header","children":[["$","div",null,{"className":"breadcrumb","children":[["$","$Lb",null,{"href":"/","children":"홈"}]," / ","정처기"," / ","물리DB설계, 트랜잭션, SQL문 1회독"]}],["$","h1",null,{"children":"물리DB설계, 트랜잭션, SQL문 1회독"}],["$","div",null,{"className":"post-meta","children":[["$","span",null,{"children":["📅 ","2026-06-24"]}],["$","span",null,{"children":["📝"," ","정처기"]}]]}]]}],["$","div",null,{"className":"md-body","dangerouslySetInnerHTML":{"__html":"$c"}}]]}]}]
-7:[["$","meta","0",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","1",{"charSet":"utf-8"}],["$","title","2",{"children":"물리DB설계, 트랜잭션, SQL문 1회독 | so0126의 TIL"}],["$","meta","3",{"name":"description","content":"오늘 배운 것을 잊지 않기 위한 기록"}]]
+2:["$","$L9",null,{"categories":[{"label":"정처기","folder":"01 정처기","slug":"jungchogi","icon":"📝"},{"label":"코테","folder":"02 코테","slug":"kote","icon":"💻"},{"label":"오픽","folder":"03 오픽","slug":"opic","icon":"🎤"}],"postsByCategory":{"jungchogi":[{"category":"정처기","categorySlug":"jungchogi","categoryIcon":"📝","file":"2026-06-24 물리DB설계, 트랜잭션, SQL문 1회독.md","slug":"2026-06-24","title":"2026-06-24 물리DB설계, 트랜잭션, SQL문 1회독","displayTitle":"물리DB설계, 트랜잭션, SQL문 1회독","date":"2026-06-24","preview":"- 연관 과목: [[과목3데이터베이스 구축]] [[과목4프로그래밍 언어 활용]] - 세부 단원: #물리DB설계 #트랜잭션 - 상태: #1회차 --- 문제 통째로 적지 말고, '내가 몰랐던 개념/핵심'만 한 줄로 요약 1. 지연 갱신 VS 즉각 갱신 - 헷갈린 점: 용어가 헷갈림 기억이 …","readingTime":2,"tags":[],"frontmatter":{}},{"category":"정처기","categorySlug":"jungchogi","categoryIcon":"📝","file":"2026-06-23 데이터베이스 논리+물리0.5.md","slug":"2026-06-23","title":"2026-06-23 데이터베이스 논리+물리0.5","displayTitle":"데이터베이스 논리+물리0.5","date":"2026-06-23","preview":"- 연관 과목: [[과목3데이터베이스 구축]] - 세부 단원: #논리DB설계 #물리DB설계 - 상태: #1회차 --- 1. 디비젼(A÷B) - 헷갈린 점: B 릴레이션의 모든 값과 짝을 이루는 A의 값만 골라내라. - 한줄 정리: 모든 값과 짝을 이뤄야 함. 그 중 몇 개만 만족 X -…","readingTime":2,"tags":[],"frontmatter":{}}],"kote":[{"category":"코테","categorySlug":"kote","categoryIcon":"💻","file":"2026-06-22 프로그래머스 12390 문자열 뒤집기 (Lv.0).md","slug":"2026-06-22","title":"2026-06-22 프로그래머스 12390 문자열 뒤집기 (Lv.0)","displayTitle":"프로그래머스 12390 문자열 뒤집기 (Lv.0)","date":"2026-06-22","preview":"- 자료구조/알고리즘: [[자료구조문자열]], [[자료구조배열]] - 핵심 메서드: split → reverse → join 패턴 - 상태: #성공 --- 스프레드 연산자로 더 짧게 쓸 수 있음 - reverse()는 배열에만 쓸 수 있음 → 문자열은 반드시 split('') 후 사용 …","readingTime":1,"tags":[],"frontmatter":{}}],"opic":[{"category":"오픽","categorySlug":"opic","categoryIcon":"🎤","file":"2026-06-22 카페 묘사 example.md","slug":"2026-06-22","title":"2026-06-22 카페 묘사 example","displayTitle":"카페 묘사 example","date":"2026-06-22","preview":"- 질문 유형: [[유형1현재 상태 및 묘사]] - 주제: #카페 - 주제: 카페 (Café) - 질문 핵심: 자주 가는 카페를 묘사하고, 거기서 주로 무엇을 하는지 설명해라. - There is a café I really love near my place. It's cozy and …","readingTime":1,"tags":[],"frontmatter":{}}]},"totalPostCount":4,"latestDate":"2026-06-24","children":["$","div",null,{"className":"post-layout","children":[["$","article",null,{"className":"post-article","children":[["$","div",null,{"className":"post-header","children":[["$","div",null,{"className":"breadcrumb","children":[["$","$L7",null,{"href":"/","children":"홈"}],["$","span",null,{"children":" / "}],["$","span",null,{"children":"정처기"}]]}],["$","h1",null,{"children":"물리DB설계, 트랜잭션, SQL문 1회독"}],["$","div",null,{"className":"post-meta","children":[["$","span",null,{"children":["📅 ","2026-06-24"]}],["$","span",null,{"children":["📝"," ","정처기"]}],["$","span",null,{"children":["⏱ 약 ",2,"분"]}],false]}],["$","a",null,{"className":"post-github-link","href":"https://github.com/so0126/til/blob/main/01%20%EC%A0%95%EC%B2%98%EA%B8%B0%2F2026-06-24%20%EB%AC%BC%EB%A6%ACDB%EC%84%A4%EA%B3%84%2C%20%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%2C%20SQL%EB%AC%B8%201%ED%9A%8C%EB%8F%85.md","target":"_blank","rel":"noreferrer","children":"GitHub에서 원문 보기 ↗"}]]}],["$","$La",null,{"html":"$b"}],["$","nav",null,{"className":"post-nav","children":[["$","div",null,{"className":"post-nav-item prev","children":["$","$L7",null,{"href":"/jungchogi/2026-06-23/","children":[["$","span",null,{"className":"nav-label","children":"← 이전 기록"}],["$","span",null,{"className":"nav-title","children":"데이터베이스 논리+물리0.5"}]]}]}],["$","div",null,{"className":"post-nav-item next","children":["$","span",null,{}]}]]}]]}],["$","aside",null,{"className":"toc-sidebar","children":["$","$Lc",null,{}]}]]}]}]
+8:[["$","meta","0",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","1",{"charSet":"utf-8"}],["$","title","2",{"children":"물리DB설계, 트랜잭션, SQL문 1회독 | so0126의 TIL"}],["$","meta","3",{"name":"description","content":"오늘 배운 것을 잊지 않기 위한 기록"}]]
 1:null
