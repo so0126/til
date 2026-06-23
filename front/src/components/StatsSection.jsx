@@ -23,32 +23,28 @@ function buildShellCells(activityCells) {
 }
 
 export default function StatsSection({ stats }) {
-  const { total, monthCount, streak, latestDate, activityCells, activityMax } = stats;
+  const { total, monthCount, latestDate, monthActivityCells, monthActivityMax, monthRecordDays } = stats;
   const now = new Date();
   const months = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
   const monthLabel = months[now.getMonth()];
-  const shellCells = buildShellCells(activityCells || []);
-  const filledDays = (activityCells || []).filter(c => c.count > 0).length;
+  const shellCells = buildShellCells(monthActivityCells || []);
 
   return (
     <div className="stats-section">
       <div className="stats-header">
         <span className="stats-title">🐚 {monthLabel} 기록 조개</span>
-        {streak > 0 && (
-          <span className="stats-streak">🔥 최근 {streak}일 연속 작성 중</span>
-        )}
       </div>
       <div className="stats-body">
         <div className="stats-shell-panel">
           <div className="stats-shell-meta">
-            <span className="stats-shell-score">🐚 최근 42일 중 {filledDays}일 기록</span>
-            <span className="stats-shell-note">진할수록 기록이 많은 날</span>
+            <span className="stats-shell-score">🐚 이번 달 기록일 {monthRecordDays || 0}일</span>
+            <span className="stats-shell-note">달마다 기록이 다시 채워져요</span>
           </div>
-          <div className="stats-shell-grid" aria-label="최근 42일 활동 조개 모양">
+          <div className="stats-shell-grid" aria-label="이번 달 활동 조개 모양">
             {shellCells.map(cell => {
               const level = cell.count <= 0
                 ? 0
-                : Math.min(4, Math.max(1, Math.ceil((cell.count / activityMax) * 4)));
+                : Math.min(4, Math.max(1, Math.ceil((cell.count / monthActivityMax) * 4)));
 
               return (
                 <span
@@ -78,7 +74,7 @@ export default function StatsSection({ stats }) {
           </div>
           <div className="stats-item">
             <span className="stats-num">{monthCount}</span>
-            <span className="stats-label">이번 달</span>
+            <span className="stats-label">이번 달 글</span>
           </div>
           {latestDate && (
             <div className="stats-item">

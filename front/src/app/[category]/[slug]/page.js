@@ -29,6 +29,7 @@ export default async function PostPage({ params }) {
     <SiteLayout
       categories={CATEGORIES}
       postsByCategory={postsByCategory}
+      stats={stats}
       totalPostCount={posts.length}
       latestDate={stats.latestDate}
     >

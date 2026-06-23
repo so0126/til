@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Sidebar from './Sidebar';
 
-export default function MobileLayout({ children, categories, postsByCategory, totalPostCount, latestDate }) {
+export default function MobileLayout({ children, categories, postsByCategory, stats, totalPostCount, latestDate }) {
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [todayViews, setTodayViews] = useState(0);
@@ -111,6 +111,7 @@ export default function MobileLayout({ children, categories, postsByCategory, to
           <Sidebar
             categories={categories}
             postsByCategory={postsByCategory}
+            stats={stats}
             totalPostCount={totalPostCount}
             latestDate={latestDate}
             drawerOpen={drawerOpen}

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import StatsSection from './StatsSection';
 
 function groupByYearMonth(posts) {
   const map = {};
@@ -37,10 +38,11 @@ function BirthdayConfetti() {
   );
 }
 
-export default function Sidebar({ categories, postsByCategory, totalPostCount, latestDate, drawerOpen, onClose }) {
+export default function Sidebar({ categories, postsByCategory, stats, totalPostCount, latestDate, drawerOpen, onClose }) {
   const pathname = usePathname();
   const now = new Date();
   const isBirthday = now.getMonth() === 11 && now.getDate() === 26;
+  const streak = stats?.streak || 0;
 
   // 여러 카테고리 동시 열기 + localStorage 유지
   const [openCats,  setOpenCats]  = useState(() => {
@@ -101,6 +103,9 @@ export default function Sidebar({ categories, postsByCategory, totalPostCount, l
           <div className="profile-latest" style={{ marginTop: 4 }}>
             📚 총 {totalPostCount}개의 TIL
           </div>
+          {streak > 0 && (
+            <div className="profile-streak">🔥 최근 {streak}일 연속 작성 중</div>
+          )}
         </div>
 
         {/* 아코디언 메뉴 */}
@@ -114,6 +119,17 @@ export default function Sidebar({ categories, postsByCategory, totalPostCount, l
               onClick={onClose}
             >
               🏠 홈
+            </Link>
+          </div>
+
+          <div className="acc-item">
+            <Link
+              href="/shells"
+              className={`acc-header${pathname === '/shells' ? ' open' : ''}`}
+              style={{ display: 'flex', textDecoration: 'none' }}
+              onClick={onClose}
+            >
+              🐚 기록 조개
             </Link>
           </div>
 
@@ -211,11 +227,7 @@ export default function Sidebar({ categories, postsByCategory, totalPostCount, l
           })}
         </nav>
 
-        {/* 캐릭터 */}
-        <div style={{ textAlign: 'center', fontSize: '1.4rem', marginTop: 'auto', paddingTop: '16px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-          ( ˶ˆᗜˆ˵ ) ✨
-          <div style={{ fontSize: '0.7rem', marginTop: 4 }}>열공 중이에요!</div>
-        </div>
+        <StatsSection stats={stats} />
       </aside>
     </>
   );

@@ -1,7 +1,6 @@
 import { getAllPosts, getPostsByCategory, getSiteStats, CATEGORIES } from '@/lib/posts';
 import SiteLayout from '@/components/SiteLayout';
 import HomeClient from '@/components/HomeClient';
-import StatsSection from '@/components/StatsSection';
 
 export default function HomePage() {
   const posts = getAllPosts();
@@ -12,11 +11,11 @@ export default function HomePage() {
     <SiteLayout
       categories={CATEGORIES}
       postsByCategory={postsByCategory}
+      stats={stats}
       totalPostCount={posts.length}
       latestDate={stats.latestDate}
     >
       <HomeClient posts={posts} categories={CATEGORIES} />
-      <StatsSection stats={stats} />
     </SiteLayout>
   );
 }

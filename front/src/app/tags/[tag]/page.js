@@ -1,6 +1,7 @@
 import { getAllPosts, getPostsByCategory, CATEGORIES } from '@/lib/posts';
 import SiteLayout from '@/components/SiteLayout';
 import Link from 'next/link';
+import { getSiteStats } from '@/lib/posts';
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -15,11 +16,12 @@ export default async function TagPage({ params }) {
   const allPosts = getAllPosts();
   const posts = allPosts.filter(p => (p.tags || []).includes(tag));
   const postsByCategory = getPostsByCategory();
+  const stats = getSiteStats(allPosts);
   const latestDate = allPosts[0]?.date || '';
 
   if (tag === '__empty__') {
     return (
-      <SiteLayout categories={CATEGORIES} postsByCategory={postsByCategory} totalPostCount={allPosts.length} latestDate={latestDate}>
+      <SiteLayout categories={CATEGORIES} postsByCategory={postsByCategory} stats={stats} totalPostCount={allPosts.length} latestDate={latestDate}>
         <p className="empty-msg">등록된 태그가 없어요 😢</p>
       </SiteLayout>
     );
@@ -29,6 +31,7 @@ export default async function TagPage({ params }) {
     <SiteLayout
       categories={CATEGORIES}
       postsByCategory={postsByCategory}
+      stats={stats}
       totalPostCount={allPosts.length}
       latestDate={latestDate}
     >

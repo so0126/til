@@ -142,7 +142,10 @@ export default function HomeClient({ posts, categories }) {
         <img src="https://github.com/so0126.png" alt="so0126" referrerPolicy="no-referrer" />
         <div className="home-hero-text">
           <h1>so0126의 TIL 📖</h1>
-          <p>매일 배운 것을 기록하는 공간이에요</p>
+          <p>
+            매일 배운 것을 기록하는 공간이에요
+            <span className="home-hero-note">( ˶ˆᗜˆ˵ ) ✨ 열공 중이에요!</span>
+          </p>
         </div>
       </div>
 
@@ -173,32 +176,34 @@ export default function HomeClient({ posts, categories }) {
           )}
         </div>
 
-        <div className="date-quick-row">
-          <button className="quick-btn" onClick={() => applyQuick('today')} type="button">오늘</button>
-          <button className="quick-btn" onClick={() => applyQuick('7d')}   type="button">최근 7일</button>
-          <button className="quick-btn" onClick={() => applyQuick('30d')}  type="button">최근 30일</button>
-          <button className="quick-btn" onClick={() => applyQuick('all')}  type="button">전체 기간</button>
-        </div>
+        <div className="search-filter-row">
+          <div className="date-quick-row">
+            <button className="quick-btn" onClick={() => applyQuick('today')} type="button">오늘</button>
+            <button className="quick-btn" onClick={() => applyQuick('7d')}   type="button">최근 7일</button>
+            <button className="quick-btn" onClick={() => applyQuick('30d')}  type="button">최근 30일</button>
+            <button className="quick-btn" onClick={() => applyQuick('all')}  type="button">전체 기간</button>
+          </div>
 
-        <div className="date-row">
-          <label>기간</label>
-          <input className="date-input" type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} />
-          <span className="date-sep">~</span>
-          <input className="date-input" type="date" value={dateTo}   onChange={e => setDateTo(e.target.value)} />
-        </div>
+          <div className="date-row">
+            <label>기간</label>
+            <input className="date-input" type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} />
+            <span className="date-sep">~</span>
+            <input className="date-input" type="date" value={dateTo}   onChange={e => setDateTo(e.target.value)} />
+          </div>
 
-        <div className="cat-buttons">
-          {categories.map(cat => (
-            <button
-              key={cat.slug}
-              className={`cat-btn${activeCats.includes(cat.slug) ? ' active' : ''}`}
-              onClick={() => toggleCat(cat.slug)}
-              type="button"
-            >
-              {cat.icon} {cat.label}
-              {activeCats.includes(cat.slug) && <span className="cat-check"> ✓</span>}
-            </button>
-          ))}
+          <div className="cat-buttons">
+            {categories.map(cat => (
+              <button
+                key={cat.slug}
+                className={`cat-btn${activeCats.includes(cat.slug) ? ' active' : ''}`}
+                onClick={() => toggleCat(cat.slug)}
+                type="button"
+              >
+                {cat.icon} {cat.label}
+                {activeCats.includes(cat.slug) && <span className="cat-check"> ✓</span>}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

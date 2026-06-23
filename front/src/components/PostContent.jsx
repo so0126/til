@@ -8,15 +8,18 @@ export default function PostContent({ html }) {
       if (pre.closest('.code-block-wrapper')) return;
 
       const code = pre.querySelector('code');
-      const lang = code?.className?.match(/language-(\w+)/)?.[1] || '';
+      // shiki는 data-lang 속성, 구형은 class="language-xxx"
+      const lang = pre.getAttribute('data-lang')
+        || code?.className?.match(/language-(\w+)/)?.[1]
+        || '';
 
-      // wrapper div
+      // wrapper
       const wrapper = document.createElement('div');
       wrapper.className = 'code-block-wrapper';
       pre.parentNode.insertBefore(wrapper, pre);
       wrapper.appendChild(pre);
 
-      // header: macOS dots + language + copy button
+      // header: macOS dots + language + copy
       const header = document.createElement('div');
       header.className = 'code-header';
 
@@ -34,7 +37,8 @@ export default function PostContent({ html }) {
       btn.setAttribute('type', 'button');
       btn.setAttribute('aria-label', '코드 복사');
       btn.addEventListener('click', () => {
-        navigator.clipboard?.writeText(code?.textContent || '').then(() => {
+        const text = code?.textContent || pre.textContent || '';
+        navigator.clipboard?.writeText(text).then(() => {
           btn.textContent = '✓ 복사됨';
           setTimeout(() => { btn.textContent = '복사'; }, 2000);
         });

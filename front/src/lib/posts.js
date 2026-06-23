@@ -21,7 +21,7 @@ async function applyShikiHighlighting(html) {
     try {
       const highlighted = await codeToHtml(code, {
         lang,
-        theme: 'github-dark',
+        theme: 'github-light',
         transformers: [{
           pre(node) {
             // 배경은 CSS에서 제어하므로 shiki inline style 제거
@@ -203,19 +203,29 @@ export function getSiteStats(posts) {
     postCountByDate[p.date] = (postCountByDate[p.date] || 0) + 1;
   }
 
-  const activityCells = [];
-  const end = new Date(now);
-  end.setHours(12, 0, 0, 0);
-  for (let i = 41; i >= 0; i -= 1) {
-    const d = new Date(end);
-    d.setDate(end.getDate() - i);
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  monthStart.setHours(12, 0, 0, 0);
+  const monthEnd = new Date(now);
+  monthEnd.setHours(12, 0, 0, 0);
+  const monthActivityCells = [];
+  for (let d = new Date(monthStart); d <= monthEnd; d.setDate(d.getDate() + 1)) {
     const date = toLocalDateStr(d);
-    activityCells.push({ date, count: postCountByDate[date] || 0 });
+    monthActivityCells.push({ date, count: postCountByDate[date] || 0 });
   }
 
-  const activityMax = Math.max(...activityCells.map(c => c.count), 1);
+  const monthActivityMax = Math.max(...monthActivityCells.map(c => c.count), 1);
+  const monthRecordDays = monthActivityCells.filter(c => c.count > 0).length;
 
-  return { total: posts.length, monthCount, catRanking, streak, latestDate: dates[0] || '', activityCells, activityMax };
+  return {
+    total: posts.length,
+    monthCount,
+    catRanking,
+    streak,
+    latestDate: dates[0] || '',
+    monthActivityCells,
+    monthActivityMax,
+    monthRecordDays,
+  };
 }
 
 export async function getPostContent(categorySlug, slug) {
