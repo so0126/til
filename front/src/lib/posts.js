@@ -35,8 +35,8 @@ export function getReadingTime(content) {
   return Math.max(1, Math.ceil(words / 200));
 }
 
-export function getPreview(content) {
-  const text = content
+function stripMarkdown(content) {
+  return content
     .replace(/```[\s\S]*?```/gm, '')
     .replace(/^#{1,6}\s+.+$/gm, '')
     .replace(/!\[.*?\]\(.*?\)/g, '')
@@ -46,7 +46,29 @@ export function getPreview(content) {
     .map(l => l.trim())
     .filter(l => l.length > 2)
     .join(' ');
+}
+
+export function getPreview(content) {
+  const text = stripMarkdown(content);
   return text.length > 160 ? text.slice(0, 160) + '…' : text;
+}
+
+// GitHub 경고 박스: > [!NOTE] 등 → styled div
+function processGitHubAlerts(html) {
+  const ALERTS = {
+    NOTE:      { label: '참고',  icon: 'ℹ️',  cls: 'alert-note' },
+    TIP:       { label: '팁',    icon: '💡', cls: 'alert-tip' },
+    IMPORTANT: { label: '중요',  icon: '📌', cls: 'alert-important' },
+    WARNING:   { label: '주의',  icon: '⚠️',  cls: 'alert-warning' },
+    CAUTION:   { label: '경고',  icon: '🚨', cls: 'alert-caution' },
+  };
+  return html.replace(/<blockquote>([\s\S]*?)<\/blockquote>/gi, (match, inner) => {
+    const m = /^\s*<p>\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](?:\r?\n)?/i.exec(inner);
+    if (!m) return match;
+    const a = ALERTS[m[1].toUpperCase()];
+    const body = inner.replace(/^\s*<p>\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](?:\r?\n)?/i, '<p>').trim();
+    return `<div class="md-alert ${a.cls}"><p class="alert-title">${a.icon} ${a.label}</p><div class="alert-body">${body}</div></div>`;
+  });
 }
 
 // 헤딩에 id 추가 (TOC용)
@@ -83,6 +105,7 @@ export function getAllPosts() {
         category: cat.label, categorySlug: cat.slug, categoryIcon: cat.icon,
         file, slug: slugMap.get(file), title, displayTitle, date,
         preview: getPreview(content),
+        bodyText: stripMarkdown(content).toLowerCase(),
         readingTime: getReadingTime(content),
         tags: data.tags || [],
         frontmatter: data,
@@ -160,7 +183,7 @@ export async function getPostContent(categorySlug, slug) {
     title, displayTitle: title.replace(DATE_RE, '').trim(),
     date, tags: data.tags || [],
     readingTime: getReadingTime(content),
-    html: addHeadingIds(processed.toString()),
+    html: processGitHubAlerts(addHeadingIds(processed.toString())),
     filePath: `${cat.folder}/${file}`,
     frontmatter: data,
   };

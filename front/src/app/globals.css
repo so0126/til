@@ -691,6 +691,35 @@ body {
 }
 .copy-btn:hover { background: rgba(255,255,255,0.24); }
 
+/* ── GitHub 경고 박스 ───────────────────────── */
+.md-alert {
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 18px 0;
+  border-left: 4px solid;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+.md-alert .alert-title {
+  font-weight: 700;
+  margin: 0 0 6px;
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+}
+.md-alert .alert-body > p:first-child { margin-top: 0; }
+.md-alert .alert-body > p:last-child  { margin-bottom: 0; }
+
+.alert-note      { background: #EFF8FF; border-color: var(--ocean-500); color: #174A70; }
+.alert-note .alert-title { color: var(--ocean-700); }
+.alert-tip       { background: #F0FBF4; border-color: #4CAF82; color: #1B5E3A; }
+.alert-tip .alert-title { color: #2E7D52; }
+.alert-important { background: #F5F0FF; border-color: #9B72CF; color: #3B1F6E; }
+.alert-important .alert-title { color: #6B3FA0; }
+.alert-warning   { background: #FFFBEA; border-color: #F5C942; color: #5C4200; }
+.alert-warning .alert-title { color: #9A6D00; }
+.alert-caution   { background: #FFF0EE; border-color: #E05252; color: #5C1212; }
+.alert-caution .alert-title { color: #C0392B; }
+
 /* ── 3열 포스트 레이아웃 ───────────────────── */
 .post-layout {
   display: flex;

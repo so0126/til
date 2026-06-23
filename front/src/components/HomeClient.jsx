@@ -54,7 +54,12 @@ export default function HomeClient({ posts, categories }) {
   const filtered = useMemo(() => posts.filter(p => {
     if (keyword) {
       const kw = keyword.toLowerCase();
-      if (!p.displayTitle.toLowerCase().includes(kw) && !p.category.toLowerCase().includes(kw)) return false;
+      if (
+        !p.displayTitle.toLowerCase().includes(kw) &&
+        !p.category.toLowerCase().includes(kw) &&
+        !(p.bodyText || '').includes(kw) &&
+        !(p.tags || []).some(t => t.toLowerCase().includes(kw))
+      ) return false;
     }
     if (activeCats.length > 0 && !activeCats.includes(p.categorySlug)) return false;
     if (dateFrom && p.date && p.date < dateFrom) return false;
@@ -92,7 +97,7 @@ export default function HomeClient({ posts, categories }) {
           <input
             className="search-input"
             type="text"
-            placeholder="🔍 제목 검색..."
+            placeholder="🔍 제목, 본문, 태그 검색..."
             value={keyword}
             onChange={e => setKeyword(e.target.value)}
           />
