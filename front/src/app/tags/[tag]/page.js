@@ -4,16 +4,26 @@ import Link from 'next/link';
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
-  const tags = new Set(posts.flatMap(p => p.tags || []));
-  return [...tags].filter(Boolean).map(tag => ({ tag: encodeURIComponent(tag) }));
+  const tags = [...new Set(posts.flatMap(p => p.tags || []))].filter(Boolean);
+  // 태그가 없으면 빌드 오류 방지용 placeholder
+  if (tags.length === 0) return [{ tag: '__empty__' }];
+  return tags.map(tag => ({ tag }));
 }
 
 export default async function TagPage({ params }) {
-  const tag = decodeURIComponent(params.tag);
+  const tag = params.tag;
   const allPosts = getAllPosts();
   const posts = allPosts.filter(p => (p.tags || []).includes(tag));
   const postsByCategory = getPostsByCategory();
   const latestDate = allPosts[0]?.date || '';
+
+  if (tag === '__empty__') {
+    return (
+      <SiteLayout categories={CATEGORIES} postsByCategory={postsByCategory} totalPostCount={allPosts.length} latestDate={latestDate}>
+        <p className="empty-msg">등록된 태그가 없어요 😢</p>
+      </SiteLayout>
+    );
+  }
 
   return (
     <SiteLayout

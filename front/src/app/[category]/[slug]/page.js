@@ -49,7 +49,7 @@ export default async function PostPage({ params }) {
               {post.tags?.length > 0 && (
                 <span className="post-tags">
                   {post.tags.map(t => (
-                    <a key={t} href={`/tags/${encodeURIComponent(t)}/`} className="post-tag post-tag-link">#{t}</a>
+                    <a key={t} href={`/tags/${t}/`} className="post-tag post-tag-link">#{t}</a>
                   ))}
                 </span>
               )}

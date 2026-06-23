@@ -16,6 +16,30 @@
   font-weight: 700;
   font-display: swap;
 }
+@font-face {
+  font-family: 'SUIT';
+  src: url('/til/fonts/SUIT-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SUIT';
+  src: url('/til/fonts/SUIT-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SUIT';
+  src: url('/til/fonts/SUIT-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SUIT';
+  src: url('/til/fonts/SUIT-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
 
 /* ── CSS 변수 ──────────────────────────────── */
 :root {
@@ -41,7 +65,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'IM Hyemin', sans-serif;
+  font-family: 'SUIT', 'IM Hyemin', sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -319,7 +343,9 @@ body {
 .acc-body li a {
   display: block;
   padding: 5px 10px;
-  font-size: 0.8rem;
+  font-size: 0.83rem;
+  font-family: 'SUIT', sans-serif;
+  font-weight: 500;
   color: var(--text-sub);
   text-decoration: none;
   border-radius: 6px;
@@ -328,6 +354,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.5;
 }
 .acc-body li a:hover {
   background: var(--ocean-100);
