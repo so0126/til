@@ -4,6 +4,39 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
 import remarkHtml from 'remark-html';
+import { codeToHtml } from 'shiki';
+
+// 신택스 하이라이팅: <pre><code class="language-xxx">...</code></pre> → shiki HTML
+async function applyShikiHighlighting(html) {
+  const regex = /<pre><code(?:\s+class="language-([^"]*)")?>([\s\S]*?)<\/code><\/pre>/g;
+  const entries = [];
+  let m;
+  while ((m = regex.exec(html)) !== null) {
+    entries.push({ full: m[0], lang: (m[1] || 'text').toLowerCase(), raw: m[2] });
+  }
+  for (const { full, lang, raw } of entries) {
+    const code = raw
+      .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+    try {
+      const highlighted = await codeToHtml(code, {
+        lang,
+        theme: 'github-dark',
+        transformers: [{
+          pre(node) {
+            // 배경은 CSS에서 제어하므로 shiki inline style 제거
+            if (node.properties) delete node.properties.style;
+            node.properties['data-lang'] = lang;
+          },
+        }],
+      });
+      html = html.replace(full, highlighted);
+    } catch (_) {
+      // 지원하지 않는 언어는 그대로 유지
+    }
+  }
+  return html;
+}
 
 const REPO_ROOT = path.join(process.cwd(), '..');
 
@@ -46,6 +79,13 @@ function stripMarkdown(content) {
     .map(l => l.trim())
     .filter(l => l.length > 2)
     .join(' ');
+}
+
+function toLocalDateStr(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 }
 
 export function getPreview(content) {
@@ -157,7 +197,25 @@ export function getSiteStats(posts) {
     }
   }
 
-  return { total: posts.length, monthCount, catRanking, streak, latestDate: dates[0] || '' };
+  const postCountByDate = {};
+  for (const p of posts) {
+    if (!p.date) continue;
+    postCountByDate[p.date] = (postCountByDate[p.date] || 0) + 1;
+  }
+
+  const activityCells = [];
+  const end = new Date(now);
+  end.setHours(12, 0, 0, 0);
+  for (let i = 41; i >= 0; i -= 1) {
+    const d = new Date(end);
+    d.setDate(end.getDate() - i);
+    const date = toLocalDateStr(d);
+    activityCells.push({ date, count: postCountByDate[date] || 0 });
+  }
+
+  const activityMax = Math.max(...activityCells.map(c => c.count), 1);
+
+  return { total: posts.length, monthCount, catRanking, streak, latestDate: dates[0] || '', activityCells, activityMax };
 }
 
 export async function getPostContent(categorySlug, slug) {
@@ -188,7 +246,7 @@ export async function getPostContent(categorySlug, slug) {
     title, displayTitle: title.replace(DATE_RE, '').trim(),
     date, tags: data.tags || [],
     readingTime: getReadingTime(content),
-    html: processGitHubAlerts(addHeadingIds(processed.toString())),
+    html: processGitHubAlerts(addHeadingIds(await applyShikiHighlighting(processed.toString()))),
     filePath: `${cat.folder}/${file}`,
     frontmatter: data,
   };

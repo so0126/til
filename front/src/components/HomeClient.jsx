@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -56,10 +56,12 @@ function PostCard({ post, keyword }) {
 
 export default function HomeClient({ posts, categories }) {
   const router = useRouter();
+  const ITEMS_PER_PAGE = 8;
   const [keyword,        setKeyword]        = useState('');
   const [dateFrom,       setDateFrom]       = useState('');
   const [dateTo,         setDateTo]         = useState('');
   const [activeCats,     setActiveCats]     = useState([]);
+  const [currentPage,    setCurrentPage]    = useState(1);
   const [searchFocused,  setSearchFocused]  = useState(false);
   const [recentSearches, setRecentSearches] = useState(() => {
     try { return JSON.parse(localStorage.getItem('til-recent-searches') || '[]'); } catch { return []; }
@@ -111,6 +113,16 @@ export default function HomeClient({ posts, categories }) {
   }), [posts, keyword, activeCats, dateFrom, dateTo]);
 
   const hasFilter = keyword || activeCats.length > 0 || dateFrom || dateTo;
+  const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+  const pagePosts = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [keyword, dateFrom, dateTo, activeCats.join('|')]);
+
+  useEffect(() => {
+    setCurrentPage(prev => Math.min(prev, totalPages));
+  }, [totalPages]);
 
   function removeCat(slug)  { setActiveCats(prev => prev.filter(s => s !== slug)); }
   function removeDate()     { setDateFrom(''); setDateTo(''); }
@@ -218,10 +230,44 @@ export default function HomeClient({ posts, categories }) {
       </div>
 
       {/* 글 목록 */}
+      {filtered.length > 0 && totalPages > 1 && (
+        <div className="pagination" aria-label="페이지네이션">
+          <button
+            type="button"
+            className="pagination-btn"
+            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
+            이전
+          </button>
+          <div className="pagination-pages">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+              <button
+                key={page}
+                type="button"
+                className={`pagination-btn page-num${page === currentPage ? ' active' : ''}`}
+                onClick={() => setCurrentPage(page)}
+                aria-current={page === currentPage ? 'page' : undefined}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            className="pagination-btn"
+            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+          >
+            다음
+          </button>
+        </div>
+      )}
+
       <div className="post-list">
         {filtered.length === 0
           ? <p className="empty-msg">조건에 맞는 TIL이 없어요 😢</p>
-          : filtered.map(p => <PostCard key={`${p.categorySlug}-${p.slug}`} post={p} keyword={keyword} />)
+          : pagePosts.map(p => <PostCard key={`${p.categorySlug}-${p.slug}`} post={p} keyword={keyword} />)
         }
       </div>
     </>
