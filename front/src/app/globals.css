@@ -234,10 +234,57 @@ body {
   list-style: none;
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.25s ease;
+  transition: max-height 0.3s ease;
   padding-left: 8px;
 }
-.acc-body.open { max-height: 800px; }
+.acc-body.open { max-height: 2000px; }
+
+/* 연도 서브헤더 */
+.acc-sub-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'IM Hyemin', sans-serif;
+  font-size: 0.82rem;
+  color: var(--ocean-700);
+  font-weight: 700;
+  text-align: left;
+  transition: background 0.15s;
+}
+.acc-sub-header:hover { background: var(--ocean-100); }
+.acc-sub-header .acc-arrow { transition: transform 0.2s; }
+.acc-sub-header.open .acc-arrow { transform: rotate(90deg); }
+
+/* 월 서브헤더 */
+.acc-month-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'IM Hyemin', sans-serif;
+  font-size: 0.8rem;
+  color: var(--text-sub);
+  text-align: left;
+  transition: background 0.15s;
+}
+.acc-month-header:hover { background: var(--ocean-100); }
+.acc-month-header .acc-arrow { transition: transform 0.2s; }
+.acc-month-header.open .acc-arrow { transform: rotate(90deg); }
+
+/* 월 하위 들여쓰기 */
+.acc-body-month { padding-left: 8px; }
+.acc-body-posts { padding-left: 10px; }
 
 .acc-body li a {
   display: block;
