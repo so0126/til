@@ -19,7 +19,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install dependencies
-        run: pip install "mkdocs>=1.5,<2" "mkdocs-material>=9,<10"
+        run: pip install "mkdocs>=1.5,<2" "mkdocs-material>=9,<10" pyyaml
 
       - name: Prepare docs folder
         run: |
@@ -29,13 +29,47 @@ jobs:
           cp -r "02 코테" docs/ 2>/dev/null || true
           cp -r "03 오픽" docs/ 2>/dev/null || true
 
-          # 가장 최근 TIL 파일을 메인 페이지로 설정 (파일명 내림차순 정렬)
-          RECENT=$(find docs -path "docs/README.md" -prune -o -name "*.md" -print | sort -r | head -1)
+          # 가장 최근 TIL 파일을 메인 페이지로 설정
+          RECENT=$(find docs -name "*.md" ! -name "README.md" | sort -r | head -1)
           if [ -n "$RECENT" ]; then
             cp "$RECENT" docs/index.md
           else
             cp docs/README.md docs/index.md
           fi
+
+      - name: Generate nav
+        run: |
+          python3 << 'EOF'
+          import os, yaml
+
+          with open('mkdocs.yml', 'r', encoding='utf-8') as f:
+              config = yaml.safe_load(f)
+
+          sections = [
+              ('정처기', '01 정처기'),
+              ('코테', '02 코테'),
+              ('오픽', '03 오픽'),
+          ]
+
+          nav = [{'최근 TIL': 'index.md'}, {'소개': 'README.md'}]
+
+          for label, folder in sections:
+              folder_path = f'docs/{folder}'
+              if os.path.exists(folder_path):
+                  files = sorted(
+                      [f for f in os.listdir(folder_path) if f.endswith('.md')],
+                      reverse=True
+                  )
+                  if files:
+                      entries = [{f[:-3]: f'{folder}/{f}'} for f in files]
+                      nav.append({label: entries})
+
+          config['nav'] = nav
+
+          with open('mkdocs.yml', 'w', encoding='utf-8') as f:
+              yaml.dump(config, f, allow_unicode=True, default_flow_style=False, sort_keys=False)
+
+          EOF
 
       - name: Deploy
         run: mkdocs gh-deploy --force
