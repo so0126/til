@@ -8,7 +8,7 @@ function PostCard({ post }) {
   const day = post.date ? post.date.slice(8, 10) : '';
 
   return (
-    <Link href={`/til/${post.categorySlug}/${post.slug}/`} className="post-card">
+    <Link href={`/${post.categorySlug}/${post.slug}/`} className="post-card">
       {post.date && (
         <div className="post-date-block">
           <div className="post-date-month">{month}월</div>

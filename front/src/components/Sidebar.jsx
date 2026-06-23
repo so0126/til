@@ -27,8 +27,8 @@ export default function Sidebar({ categories, postsByCategory, totalCount }) {
       <nav className="accordion-nav">
         <div className="acc-item">
           <Link
-            href="/til/"
-            className={`acc-header${pathname === '/til/' || pathname === '/til' ? ' open' : ''}`}
+            href="/"
+            className={`acc-header${pathname === '/' ? ' open' : ''}`}
             style={{ display: 'flex', textDecoration: 'none' }}
           >
             🏠 홈
@@ -52,11 +52,11 @@ export default function Sidebar({ categories, postsByCategory, totalCount }) {
               </button>
               <ul className={`acc-body${isOpen ? ' open' : ''}`}>
                 {posts.map(p => {
-                  const href = `/til/${cat.slug}/${p.slug}/`;
+                  const href = `/${cat.slug}/${p.slug}/`;
                   const isActive = pathname === href || pathname === href.slice(0, -1);
                   return (
                     <li key={p.slug}>
-                      <Link href={href} className={isActive ? 'active' : ''}>
+                      <Link href={href} className={isActive ? 'active' : ''} prefetch={false}>
                         {p.date && (
                           <span style={{ color: 'var(--text-muted)', fontSize: '0.72rem', marginRight: 4 }}>
                             {p.date.slice(5)}

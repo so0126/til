@@ -30,7 +30,7 @@ export default async function PostPage({ params }) {
       <article>
         <div className="post-header">
           <div className="breadcrumb">
-            <Link href="/til/">홈</Link> / {post.category} / {post.displayTitle}
+            <Link href="/">홈</Link> / {post.category} / {post.displayTitle}
           </div>
           <h1>{post.displayTitle}</h1>
           <div className="post-meta">
