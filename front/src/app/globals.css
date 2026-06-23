@@ -180,6 +180,7 @@ body {
 .sidebar {
   width: 260px;
   min-width: 260px;
+  min-height: calc(100vh - 140px);
   background: transparent;
   border-right: 1.5px solid var(--border);
   padding: 16px 12px;
@@ -759,8 +760,8 @@ body {
   flex-shrink: 0;
   position: sticky;
   top: 20px;
-  max-height: calc(100vh - 40px);
-  overflow-y: auto;
+  max-height: none;
+  overflow: visible;
   align-self: flex-start;
 }
 
@@ -1082,6 +1083,7 @@ body {
     top: 0;
     left: 0;
     height: 100vh;
+    min-height: 100vh;
     width: 280px;
     z-index: 999;
     background: var(--card-blue);
