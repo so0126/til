@@ -130,6 +130,7 @@ export default function Sidebar({ categories, postsByCategory, totalPostCount, l
                   className={`acc-header${isCatOpen ? ' open' : ''}`}
                   onClick={() => toggleCat(cat.slug)}
                   type="button"
+                  aria-expanded={isCatOpen}
                 >
                   {cat.icon} {cat.label}
                   <span className="acc-count">{posts.length}</span>
@@ -154,6 +155,7 @@ export default function Sidebar({ categories, postsByCategory, totalPostCount, l
                           className={`acc-sub-header${isYearOpen ? ' open' : ''}`}
                           onClick={() => toggleYear(cat.slug, year)}
                           type="button"
+                          aria-expanded={isYearOpen}
                         >
                           📅 {year}년
                           <span className="acc-count" style={{ marginLeft: 'auto', marginRight: 4 }}>{yearCount}</span>
@@ -172,6 +174,7 @@ export default function Sidebar({ categories, postsByCategory, totalPostCount, l
                                   className={`acc-month-header${isMonthOpen ? ' open' : ''}`}
                                   onClick={() => toggleMonth(cat.slug, year, month)}
                                   type="button"
+                                  aria-expanded={isMonthOpen}
                                 >
                                   🗓 {month}
                                   <span className="acc-count" style={{ marginLeft: 'auto', marginRight: 4 }}>{monthPosts.length}</span>
@@ -184,7 +187,8 @@ export default function Sidebar({ categories, postsByCategory, totalPostCount, l
                                     const isActive = pathname === href || pathname === href.slice(0, -1);
                                     return (
                                       <li key={p.slug}>
-                                        <Link href={href} className={isActive ? 'active' : ''} prefetch={false} onClick={onClose}>
+                                        <Link href={href} className={isActive ? 'active' : ''} prefetch={false} onClick={onClose} aria-current={isActive ? 'page' : undefined}>
+                                          {isActive && <span className="active-star" aria-hidden="true">⭐ </span>}
                                           <span style={{ color: 'var(--text-muted)', fontSize: '0.7rem', marginRight: 4 }}>
                                             {p.date ? p.date.slice(8) + '일' : ''}
                                           </span>

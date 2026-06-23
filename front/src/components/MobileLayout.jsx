@@ -9,6 +9,23 @@ export default function MobileLayout({ children, categories, postsByCategory, to
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [todayViews, setTodayViews] = useState(0);
+  const [dark, setDark] = useState(false);
+
+  // 다크모드: localStorage에서 초기값 읽어서 <html>에 적용
+  useEffect(() => {
+    const saved = localStorage.getItem('til-theme') === 'dark';
+    setDark(saved);
+    document.documentElement.setAttribute('data-theme', saved ? 'dark' : 'light');
+  }, []);
+
+  function toggleDark() {
+    setDark(prev => {
+      const next = !prev;
+      document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light');
+      try { localStorage.setItem('til-theme', next ? 'dark' : 'light'); } catch (_) {}
+      return next;
+    });
+  }
 
   // TODAY 카운터: 5시간 간격으로 1회만 집계 (같은 브라우저 기준)
   useEffect(() => {
@@ -69,12 +86,17 @@ export default function MobileLayout({ children, categories, postsByCategory, to
               target="_blank"
               rel="noreferrer"
               className="header-link"
+              aria-label="GitHub 저장소"
             >
               GitHub
             </a>
             <span className="header-divider">|</span>
-            <button className="header-random-btn" onClick={goRandom} type="button">
+            <button className="header-random-btn" onClick={goRandom} type="button" aria-label="랜덤 글 보기">
               🎲 Random
+            </button>
+            <span className="header-divider">|</span>
+            <button className="header-dark-btn" onClick={toggleDark} type="button" aria-label={dark ? '라이트 모드로 전환' : '다크 모드로 전환'}>
+              {dark ? '☀️' : '🌙'}
             </button>
           </div>
         </header>

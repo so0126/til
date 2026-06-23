@@ -56,10 +56,27 @@ function PostCard({ post, keyword }) {
 
 export default function HomeClient({ posts, categories }) {
   const router = useRouter();
-  const [keyword,    setKeyword]    = useState('');
-  const [dateFrom,   setDateFrom]   = useState('');
-  const [dateTo,     setDateTo]     = useState('');
-  const [activeCats, setActiveCats] = useState([]);
+  const [keyword,        setKeyword]        = useState('');
+  const [dateFrom,       setDateFrom]       = useState('');
+  const [dateTo,         setDateTo]         = useState('');
+  const [activeCats,     setActiveCats]     = useState([]);
+  const [searchFocused,  setSearchFocused]  = useState(false);
+  const [recentSearches, setRecentSearches] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('til-recent-searches') || '[]'); } catch { return []; }
+  });
+
+  function saveSearch(kw) {
+    if (!kw.trim()) return;
+    const next = [kw, ...recentSearches.filter(s => s !== kw)].slice(0, 6);
+    setRecentSearches(next);
+    try { localStorage.setItem('til-recent-searches', JSON.stringify(next)); } catch (_) {}
+  }
+  function removeRecent(kw) {
+    const next = recentSearches.filter(s => s !== kw);
+    setRecentSearches(next);
+    try { localStorage.setItem('til-recent-searches', JSON.stringify(next)); } catch (_) {}
+  }
+  function applyRecent(kw) { setKeyword(kw); setSearchFocused(false); }
 
   function toggleCat(slug) {
     setActiveCats(prev => prev.includes(slug) ? prev.filter(s => s !== slug) : [...prev, slug]);
@@ -119,14 +136,29 @@ export default function HomeClient({ posts, categories }) {
 
       {/* 검색 박스 */}
       <div className="search-box">
-        <div className="search-input-row">
+        <div className="search-input-row" style={{ position: 'relative' }}>
           <input
             className="search-input"
             type="text"
             placeholder="🔍 제목, 본문, 태그 검색..."
             value={keyword}
             onChange={e => setKeyword(e.target.value)}
+            onFocus={() => setSearchFocused(true)}
+            onBlur={() => setTimeout(() => setSearchFocused(false), 150)}
+            onKeyDown={e => { if (e.key === 'Enter' && keyword) saveSearch(keyword); }}
           />
+          {/* 최근 검색어 드롭다운 */}
+          {searchFocused && !keyword && recentSearches.length > 0 && (
+            <div className="recent-searches">
+              <div className="recent-searches-label">최근 검색어</div>
+              {recentSearches.map(s => (
+                <div key={s} className="recent-item">
+                  <button type="button" className="recent-item-text" onClick={() => applyRecent(s)}>🕐 {s}</button>
+                  <button type="button" className="recent-item-del" onClick={() => removeRecent(s)} aria-label={`${s} 삭제`}>×</button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="date-quick-row">

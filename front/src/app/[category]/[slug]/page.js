@@ -4,6 +4,7 @@ import { getPostContent, getAllPosts, getPostsByCategory, getAdjacentPosts, getS
 import SiteLayout from '@/components/SiteLayout';
 import PostContent from '@/components/PostContent';
 import TableOfContents from '@/components/TableOfContents';
+import InlineSearch from '@/components/InlineSearch';
 
 export async function generateStaticParams() {
   return getAllPosts().map(p => ({ category: p.categorySlug, slug: p.slug }));
@@ -47,7 +48,9 @@ export default async function PostPage({ params }) {
               <span>⏱ 약 {post.readingTime}분</span>
               {post.tags?.length > 0 && (
                 <span className="post-tags">
-                  {post.tags.map(t => <span key={t} className="post-tag">#{t}</span>)}
+                  {post.tags.map(t => (
+                    <a key={t} href={`/tags/${encodeURIComponent(t)}/`} className="post-tag post-tag-link">#{t}</a>
+                  ))}
                 </span>
               )}
             </div>
@@ -88,6 +91,7 @@ export default async function PostPage({ params }) {
 
         {/* ── 목차 (데스크톱 오른쪽) ── */}
         <aside className="toc-sidebar">
+          <InlineSearch posts={posts} />
           <TableOfContents />
         </aside>
       </div>
