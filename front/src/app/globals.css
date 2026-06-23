@@ -1488,6 +1488,63 @@ mark.search-highlight {
 [data-theme="dark"] .site-header {
   background: linear-gradient(90deg, #0a1520 0%, #0F2233 100%);
 }
+[data-theme="dark"] .search-box {
+  background: #0f2233;
+  border-color: #2a5470;
+}
+[data-theme="dark"] .search-input,
+[data-theme="dark"] .date-input {
+  background: #0b1623;
+  color: #e8f4fa;
+  border-color: #2a5470;
+}
+[data-theme="dark"] .search-input::placeholder,
+[data-theme="dark"] .date-input::placeholder {
+  color: #7da0b8;
+}
+[data-theme="dark"] .search-input:focus,
+[data-theme="dark"] .date-input:focus {
+  border-color: #7dc5e8;
+}
+[data-theme="dark"] .quick-btn {
+  background: #13283b;
+  color: #bde4f5;
+  border-color: #2a5470;
+}
+[data-theme="dark"] .quick-btn:hover {
+  background: #173149;
+  border-color: #7dc5e8;
+}
+[data-theme="dark"] .cat-btn {
+  background: #0b1623;
+  color: #bde4f5;
+  border-color: #2a5470;
+}
+[data-theme="dark"] .cat-btn:hover,
+[data-theme="dark"] .cat-btn.active {
+  background: #7dc5e8;
+  color: #0d1b2a;
+  border-color: #7dc5e8;
+}
+[data-theme="dark"] .badge-chip {
+  background: #13283b;
+  border-color: #2a5470;
+  color: #bde4f5;
+}
+[data-theme="dark"] .badge-chip button {
+  color: #7dc5e8;
+}
+[data-theme="dark"] .btn-reset,
+[data-theme="dark"] .btn-reset-all {
+  background: #0b1623;
+  color: #a8cce0;
+  border-color: #2a5470;
+}
+[data-theme="dark"] .btn-reset:hover,
+[data-theme="dark"] .btn-reset-all:hover {
+  background: #173149;
+  color: #e8f4fa;
+}
 [data-theme="dark"] .code-block-wrapper pre { background: #080f18; }
 [data-theme="dark"] .code-header { background: #0f1e2c; }
 [data-theme="dark"] mark.search-highlight {
