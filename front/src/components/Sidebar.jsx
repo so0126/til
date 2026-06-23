@@ -18,29 +18,35 @@ function groupByYearMonth(posts) {
 
 export default function Sidebar({ categories, postsByCategory, totalPostCount, latestDate, drawerOpen, onClose }) {
   const pathname = usePathname();
-  const [openCat,   setOpenCat]   = useState(null);
-  const [openYear,  setOpenYear]  = useState({});
-  const [openMonth, setOpenMonth] = useState({});
 
-  // 투데이 / 토탈 (localStorage 기반)
-  const [todayViews, setTodayViews] = useState('...');
-  const [totalViews, setTotalViews] = useState('...');
+  // 여러 카테고리 동시 열기 + localStorage 유지
+  const [openCats,  setOpenCats]  = useState(() => {
+    try { return new Set(JSON.parse(localStorage.getItem('sb-cats') || '[]')); } catch { return new Set(); }
+  });
+  const [openYear,  setOpenYear]  = useState(() => {
+    try { return JSON.parse(localStorage.getItem('sb-years') || '{}'); } catch { return {}; }
+  });
+  const [openMonth, setOpenMonth] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('sb-months') || '{}'); } catch { return {}; }
+  });
 
   useEffect(() => {
-    try {
-      const today = new Date().toISOString().slice(0, 10);
-      const todayKey = `til-today-${today}`;
-      const tc = parseInt(localStorage.getItem(todayKey) || '0') + 1;
-      localStorage.setItem(todayKey, String(tc));
-      setTodayViews(tc);
+    try { localStorage.setItem('sb-cats', JSON.stringify([...openCats])); } catch (_) {}
+  }, [openCats]);
+  useEffect(() => {
+    try { localStorage.setItem('sb-years', JSON.stringify(openYear)); } catch (_) {}
+  }, [openYear]);
+  useEffect(() => {
+    try { localStorage.setItem('sb-months', JSON.stringify(openMonth)); } catch (_) {}
+  }, [openMonth]);
 
-      const tot = parseInt(localStorage.getItem('til-total-views') || '0') + 1;
-      localStorage.setItem('til-total-views', String(tot));
-      setTotalViews(tot);
-    } catch (_) {}
-  }, []);
-
-  function toggleCat(slug) { setOpenCat(p => p === slug ? null : slug); }
+  function toggleCat(slug) {
+    setOpenCats(prev => {
+      const next = new Set(prev);
+      next.has(slug) ? next.delete(slug) : next.add(slug);
+      return next;
+    });
+  }
   function toggleYear(cat, year) {
     setOpenYear(p => ({ ...p, [cat]: p[cat] === year ? null : year }));
   }
@@ -65,17 +71,8 @@ export default function Sidebar({ categories, postsByCategory, totalPostCount, l
           {latestDate && (
             <div className="profile-latest">📅 최근 업데이트: {latestDate}</div>
           )}
-          {/* 투데이 / 토탈 */}
-          <div className="visitor-counter">
-            <div className="vc-item">
-              <span className="vc-label">TODAY</span>
-              <span className="vc-value">{todayViews}</span>
-            </div>
-            <div className="vc-divider" />
-            <div className="vc-item">
-              <span className="vc-label">TOTAL</span>
-              <span className="vc-value">{totalViews}</span>
-            </div>
+          <div className="profile-latest" style={{ marginTop: 4 }}>
+            📚 총 {totalPostCount}개의 TIL
           </div>
         </div>
 
@@ -96,7 +93,7 @@ export default function Sidebar({ categories, postsByCategory, totalPostCount, l
           {/* 카테고리 */}
           {categories.map(cat => {
             const posts    = postsByCategory[cat.slug] || [];
-            const isCatOpen = openCat === cat.slug;
+            const isCatOpen = openCats.has(cat.slug);
             const grouped  = groupByYearMonth(posts);
             const years    = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
 

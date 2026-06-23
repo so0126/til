@@ -80,11 +80,10 @@ export default function HomeClient({ posts, categories }) {
       <div className="home-hero">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="https://github.com/so0126.png" alt="so0126" referrerPolicy="no-referrer" />
-        <h1>so0126의 TIL 📖</h1>
-        <p>매일 배운 것을 기록하는 공간이에요</p>
-        <button className="btn-random" onClick={goRandom} type="button">
-          🎲 랜덤 글 보기
-        </button>
+        <div className="home-hero-text">
+          <h1>so0126의 TIL 📖</h1>
+          <p>매일 배운 것을 기록하는 공간이에요</p>
+        </div>
       </div>
 
       {/* 검색 박스 */}
