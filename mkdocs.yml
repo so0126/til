@@ -23,6 +23,7 @@ plugins:
 
 nav:
   - 최근 TIL: index.md
+  - 소개: README.md
   - 정처기: "01 정처기/"
   - 코테: "02 코테/"
   - 오픽: "03 오픽/"
