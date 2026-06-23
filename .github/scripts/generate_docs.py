@@ -2,6 +2,7 @@ import os
 import re
 import shutil
 import yaml
+from urllib.parse import quote
 
 os.makedirs("docs", exist_ok=True)
 shutil.copy("README.md", "docs/about.md")
@@ -46,6 +47,7 @@ months_seen = []
 for label, folder, f in all_files:
     title = f[:-3]
     path = f"{folder}/{f}"
+    path_url = quote(path, safe="/")
     m = date_re.match(title)
     date = m.group(1) if m else ""
     month = date[:7] if date else ""  # YYYY-MM
@@ -55,7 +57,7 @@ for label, folder, f in all_files:
         f'<div class="til-card" data-category="{label}" data-date="{date}" data-month="{month}">\n'
         f'  <span class="til-badge">{label}</span>\n'
         f'  <span class="til-date">{date}</span>\n'
-        f'  <a href="{path}">{title}</a>\n'
+        f'  <a href="{path_url}">{title}</a>\n'
         "</div>\n"
     )
 
