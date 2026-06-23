@@ -17,10 +17,14 @@ folder_map = [
     ("오픽", "03 오픽"),
 ]
 
+section_emojis = {"정처기": "📝", "코테": "💻", "오픽": "🎤"}
+
 for label, folder in folder_map:
     dst = f"docs/{folder}"
     if os.path.exists(folder):
         shutil.copytree(folder, dst, dirs_exist_ok=True)
+
+date_re = re.compile(r"^(\d{4}-\d{2}-\d{2})\s*")
 
 nav_sections = []
 all_files = []
@@ -30,16 +34,32 @@ for label, folder in folder_map:
     if not os.path.exists(folder_path):
         continue
     files = sorted(
-        [f for f in os.listdir(folder_path) if f.endswith(".md")],
+        [f for f in os.listdir(folder_path) if f.endswith(".md") and f != "index.md"],
         reverse=True,
     )
-    if files:
-        entries = [{f[:-3]: f"{folder}/{f}"} for f in files]
-        nav_sections.append({label: entries})
-        for f in files:
-            all_files.append((label, folder, f))
+    if not files:
+        continue
 
-date_re = re.compile(r"^(\d{4}-\d{2}-\d{2})")
+    # 섹션 index.md 생성 (navigation.indexes 용 — 카테고리 클릭 시 이동)
+    emoji = section_emojis.get(label, "")
+    section_lines = [f"# {emoji} {label}\n\n"]
+    for f in files:
+        title = f[:-3]
+        path_url = quote(f, safe="/")
+        m = date_re.match(title)
+        date = m.group(1) if m else ""
+        display = date_re.sub("", title).strip()
+        section_lines.append(f"- [{date} {display}]({path_url})\n")
+    with open(f"{folder_path}/index.md", "w", encoding="utf-8") as fp:
+        fp.writelines(section_lines)
+
+    # nav: index.md 를 첫 번째 항목으로 (navigation.indexes가 섹션 클릭 연결)
+    entries = [{"index.md": f"{folder}/index.md"}]
+    entries += [{f[:-3]: f"{folder}/{f}"} for f in files]
+    nav_sections.append({label: entries})
+
+    for f in files:
+        all_files.append((label, folder, f))
 
 # 카드 HTML + 월 목록 수집
 cards_html = ""
@@ -50,21 +70,17 @@ for label, folder, f in all_files:
     path_url = quote(path, safe="/")
     m = date_re.match(title)
     date = m.group(1) if m else ""
-    month = date[:7] if date else ""  # YYYY-MM
+    display_title = date_re.sub("", title).strip()  # 날짜 제거한 제목
+    month = date[:7] if date else ""
     if month and month not in months_seen:
         months_seen.append(month)
     cards_html += (
         f'<div class="til-card" data-category="{label}" data-date="{date}" data-month="{month}">\n'
         f'  <span class="til-badge">{label}</span>\n'
         f'  <span class="til-date">{date}</span>\n'
-        f'  <a href="{path_url}">{title}</a>\n'
+        f'  <a href="{path_url}">{display_title}</a>\n'
         "</div>\n"
     )
-
-# 월 드롭다운 옵션
-month_options = '<option value="">전체 날짜</option>\n'
-for month in sorted(months_seen, reverse=True):
-    month_options += f'<option value="{month}">{month}</option>\n'
 
 index_content = (
     """\
@@ -85,17 +101,19 @@ index_content = (
 <div class="til-filter">
   <div class="til-filter-row">
     <input id="til-search" type="text" placeholder="🔍 키워드 검색 (예: SQL, 트랜잭션)">
-    <select id="til-month">
-"""
-    + month_options
-    + """\
-    </select>
+  </div>
+  <div class="til-filter-row til-date-row">
+    <label>📅 기간</label>
+    <input id="til-date-from" type="date" title="시작 날짜">
+    <span>~</span>
+    <input id="til-date-to" type="date" title="종료 날짜">
+    <button id="til-date-reset" class="til-reset-btn">초기화</button>
   </div>
   <div class="til-filter-buttons">
     <button class="til-btn active" data-filter="전체">전체</button>
-    <button class="til-btn" data-filter="정처기">정처기</button>
-    <button class="til-btn" data-filter="코테">코테</button>
-    <button class="til-btn" data-filter="오픽">오픽</button>
+    <button class="til-btn" data-filter="정처기">📝 정처기</button>
+    <button class="til-btn" data-filter="코테">💻 코테</button>
+    <button class="til-btn" data-filter="오픽">🎤 오픽</button>
   </div>
 </div>
 
@@ -108,39 +126,36 @@ index_content = (
 <p id="til-empty" style="display:none;color:#888;text-align:center;padding:2rem">검색 결과가 없어요.</p>
 
 <style>
-.til-hero { text-align:center; padding: 1.5rem 0 1rem; }
-.til-hero img { display:block; margin: 0 auto 0.5rem; }
-.til-filter { margin: 1rem 0 1.2rem; display:flex; flex-direction:column; gap:0.6rem; }
-.til-filter-row { display:flex; gap:0.5rem; }
-.til-filter-row input { flex:1; padding:0.55rem 0.8rem; border:1px solid #ccc; border-radius:8px; font-size:0.95rem; }
-.til-filter-row select { padding:0.55rem 0.6rem; border:1px solid #ccc; border-radius:8px; font-size:0.9rem; color:#444; background:#fff; cursor:pointer; }
-.til-filter-buttons { display:flex; gap:0.4rem; flex-wrap:wrap; }
-.til-btn { padding:0.35rem 0.9rem; border:1.5px solid #1976d2; border-radius:20px; background:#fff; color:#1976d2; cursor:pointer; font-size:0.88rem; transition:all .15s; }
-.til-btn.active, .til-btn:hover { background:#1976d2; color:#fff; }
-.til-card { display:flex; align-items:baseline; gap:0.6rem; padding:0.55rem 0; border-bottom:1px solid #eee; }
-.til-badge { font-size:0.75rem; padding:0.15rem 0.5rem; border-radius:12px; background:#e3f2fd; color:#1565c0; white-space:nowrap; }
-.til-date { font-size:0.8rem; color:#999; white-space:nowrap; min-width:80px; }
-.til-card a { color:inherit; text-decoration:none; font-size:0.95rem; }
-.til-card a:hover { color:#1976d2; }
+.til-date-row { align-items:center; gap:0.4rem; flex-wrap:wrap; }
+.til-date-row label { font-size:0.9rem; color:#555; white-space:nowrap; }
+.til-date-row input[type="date"] { padding:0.45rem 0.6rem; border:1px solid #ccc; border-radius:8px; font-size:0.88rem; color:#444; background:#fff; cursor:pointer; font-family:'IM Hyemin',sans-serif; }
+.til-date-row span { color:#888; }
+.til-reset-btn { padding:0.35rem 0.7rem; border:1px solid #ccc; border-radius:8px; background:#f5f5f5; color:#666; cursor:pointer; font-size:0.82rem; font-family:'IM Hyemin',sans-serif; }
+.til-reset-btn:hover { background:#e0e0e0; }
 </style>
 
 <script>
 (function() {
   var cards = document.querySelectorAll('.til-card');
   var input = document.getElementById('til-search');
-  var monthSelect = document.getElementById('til-month');
+  var dateFrom = document.getElementById('til-date-from');
+  var dateTo = document.getElementById('til-date-to');
+  var resetBtn = document.getElementById('til-date-reset');
   var empty = document.getElementById('til-empty');
   var activeCategory = '전체';
 
   function filter() {
     var keyword = input.value.toLowerCase();
-    var month = monthSelect.value;
+    var from = dateFrom.value;
+    var to = dateTo.value;
     var visible = 0;
     cards.forEach(function(card) {
+      var d = card.dataset.date;
       var matchCat = activeCategory === '전체' || card.dataset.category === activeCategory;
-      var matchMonth = !month || card.dataset.month === month;
+      var matchFrom = !from || !d || d >= from;
+      var matchTo = !to || !d || d <= to;
       var matchKey = !keyword || card.textContent.toLowerCase().includes(keyword);
-      var show = matchCat && matchMonth && matchKey;
+      var show = matchCat && matchFrom && matchTo && matchKey;
       card.style.display = show ? '' : 'none';
       if (show) visible++;
     });
@@ -157,7 +172,13 @@ index_content = (
   });
 
   input.addEventListener('input', filter);
-  monthSelect.addEventListener('change', filter);
+  dateFrom.addEventListener('change', filter);
+  dateTo.addEventListener('change', filter);
+  resetBtn.addEventListener('click', function() {
+    dateFrom.value = '';
+    dateTo.value = '';
+    filter();
+  });
 })();
 </script>
 """

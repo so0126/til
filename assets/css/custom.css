@@ -1,38 +1,80 @@
+/* ── 폰트 정의 ─────────────────────────────── */
 @font-face {
   font-family: 'Kkukkukk';
   src: url('../fonts/MemomentKkukkukk.ttf') format('truetype');
   font-weight: normal;
-  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'IM Hyemin';
   src: url('../fonts/IM_Hyemin-Regular.ttf') format('truetype');
   font-weight: 400;
-  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'IM Hyemin';
   src: url('../fonts/IM_Hyemin-Bold.ttf') format('truetype');
   font-weight: 700;
-  font-style: normal;
+  font-display: swap;
 }
 
-/* 꾸미기용 — 사이트 제목, 헤더, 홈 타이틀 */
+/* ── MkDocs Material 폰트 변수 덮어쓰기 (전 페이지 적용) ── */
+:root {
+  --md-text-font: 'IM Hyemin', sans-serif;
+}
+
+/* ── 제목·헤더는 Kkukkukk ──────────────────── */
 .md-header__title,
-.md-nav__title,
-.til-hero h1,
-.md-typeset h1 {
-  font-family: 'Kkukkukk', sans-serif;
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.til-hero h1 {
+  font-family: 'Kkukkukk', sans-serif !important;
+  font-weight: normal !important;
 }
 
-/* 본문용 — 전체 콘텐츠 영역 */
-body,
-.md-typeset,
-.md-content,
-.md-nav__item,
-.til-card,
-.til-filter {
-  font-family: 'IM Hyemin', sans-serif;
+/* ── 사이드바 귀여운 캐릭터 ─────────────────── */
+.md-sidebar--primary .md-sidebar__scrollwrap::before {
+  content: "( ˶ˆᗜˆ˵ )";
+  display: block;
+  text-align: center;
+  font-size: 1.3rem;
+  padding: 0.8rem 0 0.3rem;
+  color: #1976d2;
+  letter-spacing: 0.05em;
 }
+
+/* ── 사이드바 큰 카테고리 굵고 진하게 ─────────── */
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link,
+.md-nav__item--section > .md-nav__link {
+  font-family: 'Kkukkukk', sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: normal !important;
+  color: #0d47a1 !important;
+  letter-spacing: 0.03em;
+}
+
+/* ── 사이드바 서브 항목 ────────────────────── */
+.md-nav__item .md-nav__item .md-nav__link {
+  font-family: 'IM Hyemin', sans-serif !important;
+  font-size: 0.85rem !important;
+  color: #444 !important;
+}
+
+/* ── 홈 카드 ────────────────────────────── */
+.til-hero { text-align:center; padding: 1.5rem 0 1rem; }
+.til-hero img { display:block; margin: 0 auto 0.5rem; }
+.til-filter { margin: 1rem 0 1.2rem; display:flex; flex-direction:column; gap:0.6rem; }
+.til-filter-row { display:flex; gap:0.5rem; }
+.til-filter-row input { flex:1; padding:0.55rem 0.8rem; border:1px solid #ccc; border-radius:8px; font-size:0.95rem; font-family:'IM Hyemin',sans-serif; }
+.til-filter-row select { padding:0.55rem 0.6rem; border:1px solid #ccc; border-radius:8px; font-size:0.9rem; color:#444; background:#fff; cursor:pointer; font-family:'IM Hyemin',sans-serif; }
+.til-filter-buttons { display:flex; gap:0.4rem; flex-wrap:wrap; }
+.til-btn { padding:0.35rem 0.9rem; border:1.5px solid #1976d2; border-radius:20px; background:#fff; color:#1976d2; cursor:pointer; font-size:0.88rem; font-family:'IM Hyemin',sans-serif; transition:all .15s; }
+.til-btn.active, .til-btn:hover { background:#1976d2; color:#fff; }
+.til-card { display:flex; align-items:baseline; gap:0.6rem; padding:0.55rem 0; border-bottom:1px solid #eee; }
+.til-badge { font-size:0.75rem; padding:0.15rem 0.5rem; border-radius:12px; background:#e3f2fd; color:#1565c0; white-space:nowrap; }
+.til-date { font-size:0.8rem; color:#999; white-space:nowrap; min-width:80px; }
+.til-card a { color:inherit; text-decoration:none; font-size:0.95rem; font-family:'IM Hyemin',sans-serif; }
+.til-card a:hover { color:#1976d2; }
