@@ -7,30 +7,31 @@ from urllib.parse import quote
 os.makedirs("docs", exist_ok=True)
 shutil.copy("README.md", "docs/about.md")
 
-# 폰트 및 CSS 복사
 if os.path.exists("assets"):
     shutil.copytree("assets", "docs/assets", dirs_exist_ok=True)
 
+# (레이블, 원본 폴더, docs 내부 슬러그)
+# 슬러그를 ASCII로 해서 한글/공백 경로 404 완전 방지
 folder_map = [
-    ("정처기", "01 정처기"),
-    ("코테", "02 코테"),
-    ("오픽", "03 오픽"),
+    ("정처기", "01 정처기", "jungchogi"),
+    ("코테",   "02 코테",   "kote"),
+    ("오픽",   "03 오픽",   "opic"),
 ]
 
 section_emojis = {"정처기": "📝", "코테": "💻", "오픽": "🎤"}
 
-for label, folder in folder_map:
-    dst = f"docs/{folder}"
-    if os.path.exists(folder):
-        shutil.copytree(folder, dst, dirs_exist_ok=True)
+for label, src_folder, slug in folder_map:
+    dst = f"docs/{slug}"
+    if os.path.exists(src_folder):
+        shutil.copytree(src_folder, dst, dirs_exist_ok=True)
 
 date_re = re.compile(r"^(\d{4}-\d{2}-\d{2})\s*")
 
 nav_sections = []
 all_files = []
 
-for label, folder in folder_map:
-    folder_path = f"docs/{folder}"
+for label, src_folder, slug in folder_map:
+    folder_path = f"docs/{slug}"
     if not os.path.exists(folder_path):
         continue
     files = sorted(
@@ -40,7 +41,7 @@ for label, folder in folder_map:
     if not files:
         continue
 
-    # 섹션 index.md 생성 (navigation.indexes 용 — 카테고리 클릭 시 이동)
+    # 섹션 index.md (카테고리 클릭 시 목록 페이지)
     emoji = section_emojis.get(label, "")
     section_lines = [f"# {emoji} {label}\n\n"]
     for f in files:
@@ -49,31 +50,26 @@ for label, folder in folder_map:
         m = date_re.match(title)
         date = m.group(1) if m else ""
         display = date_re.sub("", title).strip()
-        section_lines.append(f"- [{date} {display}]({path_url})\n")
+        section_lines.append(f"- **{date}** [{display}]({path_url})\n")
     with open(f"{folder_path}/index.md", "w", encoding="utf-8") as fp:
         fp.writelines(section_lines)
 
-    # nav: index.md 를 첫 번째 항목으로 (navigation.indexes가 섹션 클릭 연결)
-    entries = [{"index.md": f"{folder}/index.md"}]
-    entries += [{f[:-3]: f"{folder}/{f}"} for f in files]
+    entries = [{label: f"{slug}/index.md"}]
+    entries += [{f[:-3]: f"{slug}/{f}"} for f in files]
     nav_sections.append({label: entries})
 
     for f in files:
-        all_files.append((label, folder, f))
+        all_files.append((label, slug, f))
 
-# 카드 HTML + 월 목록 수집
+# 홈 카드 HTML
 cards_html = ""
-months_seen = []
-for label, folder, f in all_files:
+for label, slug, f in all_files:
     title = f[:-3]
-    path = f"{folder}/{f}"
-    path_url = quote(path, safe="/")
+    path_url = quote(f"{slug}/{f}", safe="/")
     m = date_re.match(title)
     date = m.group(1) if m else ""
-    display_title = date_re.sub("", title).strip()  # 날짜 제거한 제목
+    display_title = date_re.sub("", title).strip()
     month = date[:7] if date else ""
-    if month and month not in months_seen:
-        months_seen.append(month)
     cards_html += (
         f'<div class="til-card" data-category="{label}" data-date="{date}" data-month="{month}">\n'
         f'  <span class="til-badge">{label}</span>\n'
@@ -128,9 +124,9 @@ index_content = (
 <style>
 .til-date-row { align-items:center; gap:0.4rem; flex-wrap:wrap; }
 .til-date-row label { font-size:0.9rem; color:#555; white-space:nowrap; }
-.til-date-row input[type="date"] { padding:0.45rem 0.6rem; border:1px solid #ccc; border-radius:8px; font-size:0.88rem; color:#444; background:#fff; cursor:pointer; font-family:'IM Hyemin',sans-serif; }
+.til-date-row input[type="date"] { padding:0.45rem 0.6rem; border:1px solid #ccc; border-radius:8px; font-size:0.88rem; color:#444; background:#fff; cursor:pointer; }
 .til-date-row span { color:#888; }
-.til-reset-btn { padding:0.35rem 0.7rem; border:1px solid #ccc; border-radius:8px; background:#f5f5f5; color:#666; cursor:pointer; font-size:0.82rem; font-family:'IM Hyemin',sans-serif; }
+.til-reset-btn { padding:0.35rem 0.7rem; border:1px solid #ccc; border-radius:8px; background:#f5f5f5; color:#666; cursor:pointer; font-size:0.82rem; }
 .til-reset-btn:hover { background:#e0e0e0; }
 </style>
 
