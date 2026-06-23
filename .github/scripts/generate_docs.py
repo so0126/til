@@ -54,8 +54,7 @@ for label, src_folder, slug in folder_map:
     with open(f"{folder_path}/index.md", "w", encoding="utf-8") as fp:
         fp.writelines(section_lines)
 
-    entries = [{label: f"{slug}/index.md"}]
-    entries += [{f[:-3]: f"{slug}/{f}"} for f in files]
+    entries = [{f[:-3]: f"{slug}/{f}"} for f in files]
     nav_sections.append({label: entries})
 
     for f in files:

@@ -12,7 +12,6 @@ theme:
       accent: blue
   features:
     - navigation.sections
-    - navigation.indexes
     - navigation.top
     - search.highlight
     - search.suggest
