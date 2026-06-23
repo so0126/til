@@ -3,10 +3,21 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 
+const TODAY = new Date().toISOString().slice(0, 10);
+
+function toDateStr(d) {
+  return d.toISOString().slice(0, 10);
+}
+
+function addDays(date, days) {
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+
 function PostCard({ post }) {
   const month = post.date ? post.date.slice(5, 7) : '';
-  const day = post.date ? post.date.slice(8, 10) : '';
-
+  const day   = post.date ? post.date.slice(8, 10) : '';
   return (
     <Link href={`/${post.categorySlug}/${post.slug}/`} className="post-card">
       {post.date && (
@@ -24,28 +35,53 @@ function PostCard({ post }) {
 }
 
 export default function HomeClient({ posts, categories }) {
-  const [keyword, setKeyword] = useState('');
-  const [dateFrom, setDateFrom] = useState('');
-  const [dateTo, setDateTo] = useState('');
-  const [activeCat, setActiveCat] = useState('all');
+  const [keyword,    setKeyword]    = useState('');
+  const [dateFrom,   setDateFrom]   = useState('');
+  const [dateTo,     setDateTo]     = useState('');
+  const [activeCats, setActiveCats] = useState([]); // 다중선택
+
+  function toggleCat(slug) {
+    setActiveCats(prev =>
+      prev.includes(slug) ? prev.filter(s => s !== slug) : [...prev, slug]
+    );
+  }
+
+  function applyQuick(type) {
+    const today = new Date();
+    if (type === 'today') {
+      setDateFrom(TODAY); setDateTo(TODAY);
+    } else if (type === '7d') {
+      setDateFrom(toDateStr(addDays(today, -6))); setDateTo(TODAY);
+    } else if (type === '30d') {
+      setDateFrom(toDateStr(addDays(today, -29))); setDateTo(TODAY);
+    } else {
+      setDateFrom(''); setDateTo('');
+    }
+  }
+
+  function removeCat(slug) { setActiveCats(prev => prev.filter(s => s !== slug)); }
+  function removeDate()    { setDateFrom(''); setDateTo(''); }
+  function removeKeyword() { setKeyword(''); }
 
   const filtered = useMemo(() => {
     return posts.filter(p => {
-      if (keyword && !p.displayTitle.toLowerCase().includes(keyword.toLowerCase()) &&
-          !p.category.toLowerCase().includes(keyword.toLowerCase())) return false;
-      if (activeCat !== 'all' && p.categorySlug !== activeCat) return false;
+      if (keyword) {
+        const kw = keyword.toLowerCase();
+        if (!p.displayTitle.toLowerCase().includes(kw) && !p.category.toLowerCase().includes(kw)) return false;
+      }
+      if (activeCats.length > 0 && !activeCats.includes(p.categorySlug)) return false;
       if (dateFrom && p.date && p.date < dateFrom) return false;
-      if (dateTo && p.date && p.date > dateTo) return false;
+      if (dateTo   && p.date && p.date > dateTo)   return false;
       return true;
     });
-  }, [posts, keyword, dateFrom, dateTo, activeCat]);
+  }, [posts, keyword, activeCats, dateFrom, dateTo]);
 
-  function resetFilters() {
-    setKeyword('');
-    setDateFrom('');
-    setDateTo('');
-    setActiveCat('all');
-  }
+  const hasFilter = keyword || activeCats.length > 0 || dateFrom || dateTo;
+
+  const activeCatLabels = activeCats.map(s => {
+    const cat = categories.find(c => c.slug === s);
+    return cat ? `${cat.icon} ${cat.label}` : s;
+  });
 
   return (
     <>
@@ -59,6 +95,7 @@ export default function HomeClient({ posts, categories }) {
 
       {/* 검색 박스 */}
       <div className="search-box">
+        {/* 키워드 */}
         <div className="search-input-row">
           <input
             className="search-input"
@@ -68,34 +105,78 @@ export default function HomeClient({ posts, categories }) {
             onChange={e => setKeyword(e.target.value)}
           />
         </div>
+
+        {/* 날짜 퀵 필터 */}
+        <div className="date-quick-row">
+          <button className="quick-btn" onClick={() => applyQuick('today')} type="button">오늘</button>
+          <button className="quick-btn" onClick={() => applyQuick('7d')} type="button">최근 7일</button>
+          <button className="quick-btn" onClick={() => applyQuick('30d')} type="button">최근 30일</button>
+          <button className="quick-btn" onClick={() => applyQuick('all')} type="button">전체 기간</button>
+        </div>
+
+        {/* 날짜 직접 입력 */}
         <div className="date-row">
           <label>기간</label>
           <input className="date-input" type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} />
           <span className="date-sep">~</span>
           <input className="date-input" type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} />
-          <button className="btn-reset" onClick={resetFilters} type="button">초기화</button>
         </div>
+
+        {/* 카테고리 다중선택 */}
         <div className="cat-buttons">
-          <button
-            className={`cat-btn${activeCat === 'all' ? ' active' : ''}`}
-            onClick={() => setActiveCat('all')}
-            type="button"
-          >전체</button>
           {categories.map(cat => (
             <button
               key={cat.slug}
-              className={`cat-btn${activeCat === cat.slug ? ' active' : ''}`}
-              onClick={() => setActiveCat(cat.slug)}
+              className={`cat-btn${activeCats.includes(cat.slug) ? ' active' : ''}`}
+              onClick={() => toggleCat(cat.slug)}
               type="button"
             >
               {cat.icon} {cat.label}
+              {activeCats.includes(cat.slug) && <span className="cat-check"> ✓</span>}
             </button>
           ))}
         </div>
       </div>
 
-      {/* 결과 */}
-      <div className="result-info">총 {filtered.length}개의 TIL</div>
+      {/* 활성 필터 배지 + 결과 */}
+      <div className="filter-result-row">
+        <span className="result-count">
+          총 <strong>{filtered.length}</strong>개의 기록을 찾았어요
+          {(dateFrom || dateTo) && (
+            <span className="result-period">
+              &nbsp;· 검색 기간: {dateFrom || '처음'} ~ {dateTo || '오늘'}
+            </span>
+          )}
+        </span>
+
+        {hasFilter && (
+          <div className="active-badges">
+            {keyword && (
+              <span className="badge-chip">
+                🔍 {keyword}
+                <button onClick={removeKeyword} type="button">×</button>
+              </span>
+            )}
+            {(dateFrom || dateTo) && (
+              <span className="badge-chip">
+                📅 {dateFrom || '처음'} ~ {dateTo || '오늘'}
+                <button onClick={removeDate} type="button">×</button>
+              </span>
+            )}
+            {activeCatLabels.map((label, i) => (
+              <span key={activeCats[i]} className="badge-chip">
+                {label}
+                <button onClick={() => removeCat(activeCats[i])} type="button">×</button>
+              </span>
+            ))}
+            <button className="btn-reset-all" onClick={() => { setKeyword(''); setDateFrom(''); setDateTo(''); setActiveCats([]); }} type="button">
+              전체 초기화
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* 글 목록 */}
       <div className="post-list">
         {filtered.length === 0
           ? <p className="empty-msg">조건에 맞는 TIL이 없어요 😢</p>

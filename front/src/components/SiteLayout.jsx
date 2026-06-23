@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Sidebar from './Sidebar';
 
 export default function SiteLayout({ children, categories, postsByCategory, totalCount }) {
@@ -6,10 +7,10 @@ export default function SiteLayout({ children, categories, postsByCategory, tota
       <div className="minihompy">
         {/* 헤더 */}
         <header className="site-header">
-          <div>
+          <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
             <span className="logo-text">so0126의 TIL.zip</span>
             <span className="logo-sub">오늘 배운 것을 잊지 않기 위한 기록 🌊</span>
-          </div>
+          </Link>
           <div className="header-right">
             <span className="stat">TOTAL {totalCount}</span>
             <a href="https://github.com/so0126/til" target="_blank" rel="noreferrer">GitHub ↗</a>
