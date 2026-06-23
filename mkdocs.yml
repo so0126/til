@@ -1,0 +1,36 @@
+site_name: So0h의 TIL
+site_description: Today I Learned - 취업 준비 학습 기록
+site_url: https://so0126.github.io/til/
+docs_dir: .
+exclude_docs: |
+  .git/
+  .gitignore
+  99_Templates/
+  00 TIL 허브/
+  mkdocs.yml
+  .github/
+
+theme:
+  name: material
+  language: ko
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.suggest
+
+plugins:
+  - search:
+      lang: ko
+  - roamlinks
+
+nav:
+  - 홈: README.md
+  - 정처기: "01 정처기/"
+  - 코테: "02 코테/"
+  - 오픽: "03 오픽/"
