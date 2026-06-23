@@ -27,7 +27,6 @@ theme:
 plugins:
   - search:
       lang: ko
-  - roamlinks
 
 nav:
   - 홈: README.md
