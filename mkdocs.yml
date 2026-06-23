@@ -11,8 +11,8 @@ theme:
       primary: indigo
       accent: indigo
   features:
-    - navigation.tabs
     - navigation.sections
+    - navigation.expand
     - navigation.top
     - search.highlight
     - search.suggest
@@ -22,7 +22,7 @@ plugins:
       lang: ko
 
 nav:
-  - 홈: README.md
+  - 최근 TIL: index.md
   - 정처기: "01 정처기/"
   - 코테: "02 코테/"
   - 오픽: "03 오픽/"

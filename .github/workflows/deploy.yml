@@ -29,5 +29,13 @@ jobs:
           cp -r "02 코테" docs/ 2>/dev/null || true
           cp -r "03 오픽" docs/ 2>/dev/null || true
 
+          # 가장 최근 TIL 파일을 메인 페이지로 설정 (파일명 내림차순 정렬)
+          RECENT=$(find docs -path "docs/README.md" -prune -o -name "*.md" -print | sort -r | head -1)
+          if [ -n "$RECENT" ]; then
+            cp "$RECENT" docs/index.md
+          else
+            cp docs/README.md docs/index.md
+          fi
+
       - name: Deploy
         run: mkdocs gh-deploy --force
