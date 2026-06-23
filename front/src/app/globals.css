@@ -1430,18 +1430,20 @@ mark.search-highlight {
 [data-theme="dark"] {
   --bg: #0D1B2A;
   --page: #12263A;
-  --card: #172E43;
+  --card: #1A3047;
   --card-blue: #0F2233;
   --border: #2A5470;
-  --text-primary: #DFF3FA;
-  --text-secondary: #9DD7EE;
-  --text-muted: #607D8B;
-  --ocean-900: #9DD7EE;
-  --ocean-700: #55A9D6;
-  --ocean-500: #2478A8;
-  --ocean-300: #174A70;
+  /* 텍스트: 다크모드에서 확실히 밝게 */
+  --text: #E8F4FA;
+  --text-sub: #A8CCE0;
+  --text-muted: #6A9AB0;
+  /* ocean 계열 반전 */
+  --ocean-900: #BDE4F5;
+  --ocean-700: #7DC5E8;
+  --ocean-500: #3A8BBF;
+  --ocean-300: #1E5478;
   --ocean-100: #0F2233;
-  --link: #55A9D6;
+  --link: #7DC5E8;
 }
 [data-theme="dark"] .bg-wrapper {
   background: linear-gradient(160deg, #0a1520 0%, #0d1b2a 100%);
@@ -1458,11 +1460,18 @@ mark.search-highlight {
   background: #4A4000;
   color: #FFE39A;
 }
-[data-theme="dark"] .md-alert.alert-note      { background: #0F2233; }
-[data-theme="dark"] .md-alert.alert-tip       { background: #0F2218; }
-[data-theme="dark"] .md-alert.alert-important { background: #1A1030; }
-[data-theme="dark"] .md-alert.alert-warning   { background: #2A1F00; }
-[data-theme="dark"] .md-alert.alert-caution   { background: #2A0F0F; }
+[data-theme="dark"] .md-alert.alert-note      { background: #0F2233; color: #BDE4F5; }
+[data-theme="dark"] .md-alert.alert-tip       { background: #0F2218; color: #A8E6C0; }
+[data-theme="dark"] .md-alert.alert-important { background: #1A1030; color: #CDB8F0; }
+[data-theme="dark"] .md-alert.alert-warning   { background: #2A1F00; color: #FFE39A; }
+[data-theme="dark"] .md-alert.alert-caution   { background: #2A0F0F; color: #FFAAAA; }
+/* 다크모드 본문 링크, strong, code */
+[data-theme="dark"] .md-body a { color: #7DC5E8; }
+[data-theme="dark"] .md-body strong { color: #E8F4FA; }
+[data-theme="dark"] .md-body code { background: #1A3047; color: #BDE4F5; }
+[data-theme="dark"] .md-body blockquote { border-color: #2A5470; color: #A8CCE0; }
+[data-theme="dark"] .md-body th { background: #1A3047; color: #BDE4F5; }
+[data-theme="dark"] .md-body td { border-color: #2A5470; }
 
 /* 다크모드 토글 버튼 */
 .header-dark-btn {
