@@ -26,9 +26,9 @@ jobs:
           python3 << 'EOF'
           import os, shutil, yaml
 
-          # 파일 복사 (Python으로 한글 경로 안전하게 처리)
           os.makedirs('docs', exist_ok=True)
-          shutil.copy('README.md', 'docs/README.md')
+          # README.md → about.md (index.md와 충돌 방지)
+          shutil.copy('README.md', 'docs/about.md')
 
           folder_map = [
               ('정처기', '01 정처기'),
@@ -62,8 +62,11 @@ jobs:
 
           # 홈페이지(index.md) 생성
           lines = [
-              '# So0h의 TIL 📚\n\n',
+              '<div align="center">\n\n',
+              '![so0126](https://github.com/so0126.png){ width=100, style="border-radius:50%" }\n\n',
+              '# so0126의 TIL 📚\n\n',
               '취업 준비 학습 기록입니다.\n\n',
+              '</div>\n\n',
               '---\n\n',
               '## 최근 TIL\n\n',
           ]
@@ -81,7 +84,7 @@ jobs:
 
           config['nav'] = [
               {'홈': 'index.md'},
-              {'소개': 'README.md'},
+              {'소개': 'about.md'},
           ] + nav_sections
 
           with open('mkdocs.yml', 'w', encoding='utf-8') as fp:

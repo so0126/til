@@ -1,4 +1,4 @@
-site_name: So0h의 TIL
+site_name: so0126의 TIL
 site_description: Today I Learned - 취업 준비 학습 기록
 site_url: https://so0126.github.io/til/
 docs_dir: docs
@@ -8,8 +8,8 @@ theme:
   language: ko
   palette:
     - scheme: default
-      primary: indigo
-      accent: indigo
+      primary: blue
+      accent: blue
   features:
     - navigation.sections
     - navigation.expand
@@ -22,6 +22,7 @@ plugins:
       lang: ko
 
 markdown_extensions:
+  - attr_list
   - mdx_truly_sane_lists:
       nested_indent: 2
       truly_sane: true
