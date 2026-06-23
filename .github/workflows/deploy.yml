@@ -19,7 +19,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install dependencies
-        run: pip install "mkdocs>=1.5,<2" "mkdocs-material>=9,<10" pyyaml
+        run: pip install "mkdocs>=1.5,<2" "mkdocs-material>=9,<10" pyyaml mdx-truly-sane-lists
 
       - name: Build docs and generate nav
         run: |
