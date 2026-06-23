@@ -5,12 +5,14 @@ import HomeClient from '@/components/HomeClient';
 export default function HomePage() {
   const posts = getAllPosts();
   const postsByCategory = getPostsByCategory();
+  const latestDate = posts[0]?.date || '';
 
   return (
     <SiteLayout
       categories={CATEGORIES}
       postsByCategory={postsByCategory}
-      totalCount={posts.length}
+      totalPostCount={posts.length}
+      latestDate={latestDate}
     >
       <HomeClient posts={posts} categories={CATEGORIES} />
     </SiteLayout>

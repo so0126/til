@@ -18,14 +18,16 @@ export default async function PostPage({ params }) {
   const post = await getPostContent(params.category, params.slug);
   if (!post) notFound();
 
+  const posts = getAllPosts();
   const postsByCategory = getPostsByCategory();
-  const totalCount = getAllPosts().length;
+  const latestDate = posts[0]?.date || '';
 
   return (
     <SiteLayout
       categories={CATEGORIES}
       postsByCategory={postsByCategory}
-      totalCount={totalCount}
+      totalPostCount={posts.length}
+      latestDate={latestDate}
     >
       <article>
         <div className="post-header">
@@ -38,10 +40,7 @@ export default async function PostPage({ params }) {
             <span>{post.categoryIcon} {post.category}</span>
           </div>
         </div>
-        <div
-          className="md-body"
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
+        <div className="md-body" dangerouslySetInnerHTML={{ __html: post.html }} />
       </article>
     </SiteLayout>
   );
