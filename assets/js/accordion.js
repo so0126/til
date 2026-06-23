@@ -1,34 +1,29 @@
 function setupAccordion() {
-  var sidebar = document.querySelector(".md-sidebar--primary");
-  if (!sidebar) return;
+  document.addEventListener("click", function (e) {
+    // 클릭된 요소가 사이드바 최상위 섹션 label인지 확인
+    var label = e.target.closest(
+      ".md-nav--primary > .md-nav__list > .md-nav__item--nested > label.md-nav__link"
+    );
+    if (!label) return;
 
-  // 이미 등록됐으면 스킵
-  if (sidebar.dataset.accordion) return;
-  sidebar.dataset.accordion = "1";
+    var clickedToggle = label.parentElement.querySelector("input[type='checkbox']");
 
-  sidebar.addEventListener("change", function (e) {
-    var toggle = e.target;
-    if (toggle.type !== "checkbox") return;
-
-    // 최상위 섹션 토글인지 확인
-    var item = toggle.parentElement;
-    if (!item || !item.classList.contains("md-nav__item")) return;
-    var list = item.parentElement;
-    if (!list) return;
-
-    // 같은 레벨의 다른 토글 닫기
-    if (toggle.checked) {
-      list.querySelectorAll(":scope > .md-nav__item > input[type='checkbox']").forEach(function (t) {
-        if (t !== toggle) t.checked = false;
-      });
-    }
+    // 클릭 처리가 끝난 뒤 나머지 섹션 닫기
+    setTimeout(function () {
+      if (!clickedToggle || !clickedToggle.checked) return;
+      document
+        .querySelectorAll(
+          ".md-nav--primary > .md-nav__list > .md-nav__item--nested > input[type='checkbox']"
+        )
+        .forEach(function (t) {
+          if (t !== clickedToggle) t.checked = false;
+        });
+    }, 0);
   });
 }
 
-// 초기 실행
-document.addEventListener("DOMContentLoaded", setupAccordion);
-
-// MkDocs Material SPA 네비게이션 대응
-document$.subscribe(function () {
-  setTimeout(setupAccordion, 100);
-});
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", setupAccordion);
+} else {
+  setupAccordion();
+}
