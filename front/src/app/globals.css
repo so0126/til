@@ -1,22 +1,5 @@
 /* ── 폰트 ─────────────────────────────────── */
 @font-face {
-  font-family: 'Kkukkukk';
-  src: url('/til/fonts/MemomentKkukkukk.ttf') format('truetype');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'IM Hyemin';
-  src: url('/til/fonts/IM_Hyemin-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'IM Hyemin';
-  src: url('/til/fonts/IM_Hyemin-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-display: swap;
-}
-@font-face {
   font-family: 'SUIT';
   src: url('/til/fonts/SUIT-Regular.ttf') format('truetype');
   font-weight: 400;
@@ -48,10 +31,10 @@
   --ocean-500: #55A9D6;
   --ocean-300: #9DD7EE;
   --ocean-100: #E3F5FC;
-  --bg: #DFF3FA;
-  --page: #FFFDF7;
+  --bg: #EEF8FD;
+  --page: #FFFFFF;
   --card: #FFFFFF;
-  --card-blue: #F1FAFE;
+  --card-blue: #F6FBFF;
   --border: #A8D3E5;
   --text: #244052;
   --text-sub: #607D8B;
@@ -69,12 +52,13 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
+  font-size: 1.06rem;
 }
 
 /* ── 배경 래퍼 ─────────────────────────────── */
 .bg-wrapper {
   min-height: 100vh;
-  background: linear-gradient(160deg, #c8eaf7 0%, #dff3fa 40%, #e8f6fb 100%);
+  background: linear-gradient(160deg, #daeef8 0%, #eef8fd 40%, #f6fbff 100%);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -132,12 +116,12 @@ body {
   border-bottom: 2px solid var(--ocean-900);
 }
 .site-header .logo-text {
-  font-family: 'Kkukkukk', sans-serif;
-  font-size: 1.3rem;
+  font-family: 'SUIT', sans-serif;
+  font-size: 1.38rem;
   letter-spacing: 0.03em;
 }
 .site-header .logo-sub {
-  font-size: 0.78rem;
+  font-size: 0.86rem;
   opacity: 0.85;
   margin-top: 2px;
   display: block;
@@ -146,13 +130,14 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.78rem;
+  font-size: 0.86rem;
   white-space: nowrap;
   flex-shrink: 0;
 }
 .header-stat {
   color: rgba(255,255,255,0.9);
   font-weight: 700;
+  font-size: 0.86rem;
 }
 .header-divider {
   color: rgba(255,255,255,0.35);
@@ -160,6 +145,7 @@ body {
 .header-link {
   color: rgba(255,255,255,0.9) !important;
   text-decoration: none;
+  font-size: 0.86rem;
 }
 .header-link:hover { text-decoration: underline; }
 .header-random-btn {
@@ -185,27 +171,28 @@ body {
 .site-body {
   display: flex;
   min-height: calc(100vh - 140px);
+  /* 사이드바 배경을 페이지 끝까지 늘리는 가짜 컬럼 트릭 */
+  background: linear-gradient(to right, var(--card-blue) 260px, var(--page) 260px);
+  align-items: flex-start;
 }
 
 /* ── 사이드바 ──────────────────────────────── */
 .sidebar {
   width: 260px;
   min-width: 260px;
-  background: var(--card-blue);
+  background: transparent;
   border-right: 1.5px solid var(--border);
   padding: 16px 12px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  /* 독립 스크롤 */
-  height: calc(100vh - 52px);
-  position: sticky;
-  top: 52px;
-  overflow: hidden;
+  align-self: flex-start;
+  position: relative;
+  overflow: visible;
 }
 .accordion-nav {
   flex: 1;
-  overflow-y: auto;
+  overflow: visible;
   min-height: 0;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
@@ -227,13 +214,13 @@ body {
   margin-bottom: 8px;
 }
 .profile-card .profile-name {
-  font-family: 'Kkukkukk', sans-serif;
-  font-size: 1rem;
+  font-family: 'SUIT', sans-serif;
+  font-size: 1.08rem;
   color: var(--ocean-900);
   margin-bottom: 4px;
 }
 .profile-card .profile-bio {
-  font-size: 0.78rem;
+  font-size: 0.86rem;
   color: var(--text-sub);
   line-height: 1.5;
 }
@@ -261,8 +248,8 @@ body {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-family: 'Kkukkukk', sans-serif;
-  font-size: 0.92rem;
+  font-family: 'SUIT', sans-serif;
+  font-size: 1rem;
   color: var(--ocean-900);
   text-align: left;
   transition: background 0.15s;
@@ -305,7 +292,7 @@ body {
   border-radius: 6px;
   cursor: pointer;
   font-family: 'SUIT', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   color: var(--ocean-700);
   font-weight: 700;
   text-align: left;
@@ -327,7 +314,7 @@ body {
   border-radius: 6px;
   cursor: pointer;
   font-family: 'SUIT', sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   color: var(--text-sub);
   text-align: left;
   transition: background 0.15s;
@@ -343,7 +330,7 @@ body {
 .acc-body li a {
   display: block;
   padding: 5px 10px;
-  font-size: 0.83rem;
+  font-size: 0.91rem;
   font-family: 'SUIT', sans-serif;
   font-weight: 500;
   color: var(--text-sub);
@@ -395,12 +382,12 @@ body {
 }
 .home-hero-text { flex: 1; }
 .home-hero h1 {
-  font-family: 'Kkukkukk', sans-serif;
-  font-size: 1.1rem;
+  font-family: 'SUIT', sans-serif;
+  font-size: 1.2rem;
   color: var(--ocean-900);
   margin: 0;
 }
-.home-hero p { font-size: 0.8rem; color: var(--text-sub); margin: 2px 0 0; }
+.home-hero p { font-size: 0.88rem; color: var(--text-sub); margin: 2px 0 0; }
 
 .search-box {
   background: var(--card);
@@ -422,7 +409,7 @@ body {
   border: 1.5px solid var(--border);
   border-radius: 8px;
   font-family: 'SUIT', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.98rem;
   color: var(--text);
   outline: none;
   transition: border-color 0.15s;
@@ -600,7 +587,7 @@ body {
   margin-bottom: 6px;
 }
 .post-title {
-  font-size: 0.95rem;
+  font-size: 1.06rem;
   color: var(--text);
   font-weight: 700;
   line-height: 1.4;
@@ -630,14 +617,14 @@ body {
   text-decoration: none;
 }
 .post-header h1 {
-  font-family: 'Kkukkukk', sans-serif;
-  font-size: 1.5rem;
+  font-family: 'SUIT', sans-serif;
+  font-size: 1.72rem;
   color: var(--ocean-900);
   margin-bottom: 8px;
   line-height: 1.4;
 }
 .post-meta {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--text-muted);
   display: flex;
   gap: 12px;
@@ -653,9 +640,9 @@ body {
   margin: 1.4em 0 0.5em;
   font-weight: normal;
 }
-.md-body h1 { font-size: 1.4rem; border-bottom: 2px solid var(--ocean-100); padding-bottom: 6px; }
-.md-body h2 { font-size: 1.2rem; }
-.md-body h3 { font-size: 1.05rem; }
+.md-body h1 { font-size: 1.58rem; border-bottom: 2px solid var(--ocean-100); padding-bottom: 6px; }
+.md-body h2 { font-size: 1.34rem; }
+.md-body h3 { font-size: 1.16rem; }
 .md-body p { margin: 0.7em 0; }
 .md-body ul, .md-body ol { margin: 0.7em 0 0.7em 1.4em; }
 .md-body li { margin: 0.3em 0; }
@@ -772,22 +759,23 @@ body {
   flex-shrink: 0;
   position: sticky;
   top: 20px;
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - 40px);
   overflow-y: auto;
+  align-self: flex-start;
 }
 
 /* ── 포스트 헤더 추가 요소 ─────────────────── */
 .post-github-link {
   display: inline-block;
   margin-top: 8px;
-  font-size: 0.75rem;
+  font-size: 0.84rem;
   color: var(--link);
   text-decoration: none;
 }
 .post-github-link:hover { text-decoration: underline; }
 .post-tags { display: flex; gap: 4px; flex-wrap: wrap; }
 .post-tag {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   background: var(--ocean-100);
   color: var(--ocean-700);
   border-radius: 8px;
@@ -797,7 +785,7 @@ body {
 /* ── TOC ───────────────────────────────────── */
 .toc-nav { display: flex; flex-direction: column; gap: 4px; }
 .toc-title {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   color: var(--text-muted);
@@ -814,7 +802,7 @@ body {
   border: none;
   padding: 3px 8px;
   font-family: 'SUIT', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   color: var(--text-sub);
   border-left: 2px solid transparent;
   border-radius: 0 4px 4px 0;
@@ -830,14 +818,14 @@ body {
   font-weight: 700;
   background: var(--ocean-100);
 }
-.toc-h3 { padding-left: 18px; font-size: 0.73rem; }
+.toc-h3 { padding-left: 18px; font-size: 0.82rem; }
 .toc-top-btn {
   margin-top: 10px;
   background: none;
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 4px 10px;
-  font-size: 0.75rem;
+  font-size: 0.84rem;
   color: var(--text-muted);
   cursor: pointer;
   font-family: 'SUIT', sans-serif;
@@ -922,7 +910,7 @@ body {
 .post-nav-item.next a { align-items: flex-end; }
 .nav-label { font-size: 0.72rem; color: var(--text-muted); }
 .nav-title {
-  font-size: 0.85rem;
+  font-size: 0.94rem;
   color: var(--ocean-700);
   font-weight: 700;
   display: -webkit-box;
@@ -947,11 +935,11 @@ body {
   flex-wrap: wrap;
   gap: 8px;
 }
-.stats-title { font-size: 0.9rem; font-weight: 700; color: var(--ocean-900); }
-.stats-streak { font-size: 0.8rem; color: var(--ocean-700); }
+.stats-title { font-size: 1rem; font-weight: 700; color: var(--ocean-900); }
+.stats-streak { font-size: 0.88rem; color: var(--ocean-700); }
 .stats-body { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
 .stats-cats { flex: 1; min-width: 160px; display: flex; flex-direction: column; gap: 8px; }
-.stats-cat-row { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; }
+.stats-cat-row { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
 .stats-cat-name { min-width: 60px; color: var(--text-sub); }
 .stats-bar-wrap { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
 .stats-bar { height: 100%; background: var(--ocean-500); border-radius: 3px; transition: width 0.4s ease; }
@@ -964,8 +952,8 @@ body {
   padding-left: 20px;
 }
 .stats-item { display: flex; flex-direction: column; align-items: center; }
-.stats-num { font-size: 1.5rem; font-weight: 700; color: var(--ocean-700); font-family: 'Kkukkukk', sans-serif; }
-.stats-label { font-size: 0.68rem; color: var(--text-muted); margin-top: 1px; }
+.stats-num { font-size: 1.58rem; font-weight: 700; color: var(--ocean-700); font-family: 'SUIT', sans-serif; }
+.stats-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 1px; }
 
 /* ── 방문자 카운터 ──────────────────────────── */
 .profile-latest {
@@ -985,7 +973,7 @@ body {
 .vc-item { text-align: center; }
 .vc-label {
   display: block;
-  font-size: 0.65rem;
+  font-size: 0.74rem;
   color: var(--text-muted);
   letter-spacing: 0.08em;
   font-weight: 700;
@@ -995,7 +983,7 @@ body {
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--ocean-700);
-  font-family: 'Kkukkukk', sans-serif;
+  font-family: 'SUIT', sans-serif;
 }
 .vc-divider {
   width: 1px;
@@ -1111,17 +1099,21 @@ body {
   .drawer-overlay { display: block; }
 
   /* 본문 */
-  .content { padding: 14px 16px; }
+  .content { padding: 16px 18px; }
 
   /* 검색 필터 - 모바일도 가로 한 줄 유지 */
   .date-quick-row { flex-wrap: wrap; }
-  .date-row { flex-wrap: wrap; }
   .cat-buttons { flex-wrap: wrap; }
-  .date-input { width: auto; min-width: 0; flex: 1; }
+  /* 달력: 라벨 숨기고 input 작게 해서 한 줄 */
+  .date-row { flex-wrap: nowrap; gap: 4px; align-items: center; }
+  .date-row label { display: none; }
+  .date-input { font-size: 0.75rem; padding: 5px 4px; min-width: 0; flex: 1; }
+  .date-sep { flex-shrink: 0; }
 
   /* 홈 히어로 */
   .home-hero { padding: 10px 12px; }
-  .home-hero h1 { font-size: 1rem; }
+  .home-hero h1 { font-size: 1.08rem; }
+  .home-hero p { font-size: 0.96rem; }
   .home-hero img { width: 40px; height: 40px; }
 
   /* 포스트 레이아웃 */
@@ -1129,19 +1121,39 @@ body {
   .toc-float-btn { display: flex; align-items: center; justify-content: center; }
   .post-nav { flex-direction: column; }
 
+  /* 상세 페이지 폰트 */
+  .post-header h1 { font-size: 1.34rem; }
+  .post-meta { font-size: 0.82rem; }
+  .md-body { font-size: 1.03rem; line-height: 1.9; }
+  .md-body h1 { font-size: 1.26rem; }
+  .md-body h2 { font-size: 1.12rem; }
+  .md-body h3 { font-size: 1.02rem; }
+  .post-github-link { font-size: 0.88rem; }
+  .post-tag { font-size: 0.75rem; }
+
   /* 헤더 우측 - 모바일: TOTAL/TODAY/divider 모두 숨기고 아이콘만 */
   .header-stat,
   .header-divider { display: none; }
   .header-right { gap: 4px; }
-  .header-link { font-size: 0.78rem; padding: 3px 7px; }
+  .header-link { font-size: 0.88rem; padding: 3px 7px; }
   .header-random-btn { font-size: 0; } /* 텍스트 숨기고 이모지만 */
   .header-random-btn::before { content: '🎲'; font-size: 1rem; }
-  .header-dark-btn { font-size: 1rem; }
+  .header-dark-btn { font-size: 1.05rem; }
 
   /* 날짜 input 풀너비 */
-  .date-input { width: 100%; box-sizing: border-box; }
+  .date-input { width: 100%; box-sizing: border-box; font-size: 0.88rem; }
   .date-row { flex-direction: column; align-items: stretch; gap: 6px; }
   .date-sep { text-align: center; }
+
+  /* 사이드바 */
+  .profile-card .profile-name { font-size: 1rem; }
+  .profile-card .profile-bio { font-size: 0.93rem; }
+  .acc-header { font-size: 1rem; }
+  .acc-sub-header { font-size: 0.92rem; }
+  .acc-month-header { font-size: 0.9rem; }
+  .acc-body li a { font-size: 0.95rem; }
+  .profile-latest { font-size: 0.8rem; }
+  .sidebar { width: 292px; }
 }
 
 @keyframes slideIn {
@@ -1270,7 +1282,7 @@ mark.search-highlight {
   margin: 0;
   border-radius: 0;
   padding: 16px 18px;
-  background: #122436;
+  background: #0d1f2d;
   overflow-x: auto;
 }
 
@@ -1408,7 +1420,7 @@ mark.search-highlight {
   font-size: 1.4rem;
   color: var(--ocean-900);
   margin: 0 0 6px;
-  font-family: 'Kkukkukk', sans-serif;
+  font-family: 'SUIT', sans-serif;
 }
 .tag-page-count {
   font-size: 0.88rem;

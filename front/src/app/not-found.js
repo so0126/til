@@ -8,7 +8,7 @@ export default function NotFound() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      fontFamily: "'IM Hyemin', sans-serif",
+      fontFamily: "'SUIT', sans-serif",
     }}>
       <div style={{
         background: '#fffdf7',
@@ -20,7 +20,7 @@ export default function NotFound() {
         boxShadow: '0 4px 24px rgba(36,120,168,0.12)',
       }}>
         <div style={{ fontSize: '4rem', marginBottom: 12 }}>( ˘•ω•˘ )</div>
-        <h1 style={{ fontFamily: "'Kkukkukk', sans-serif", fontSize: '1.6rem', color: '#174A70', marginBottom: 8 }}>
+        <h1 style={{ fontFamily: "'SUIT', sans-serif", fontSize: '1.6rem', color: '#174A70', marginBottom: 8 }}>
           앗, 존재하지 않는 방이에요.
         </h1>
         <p style={{ color: '#607D8B', fontSize: '0.9rem', marginBottom: 24, lineHeight: 1.7 }}>
