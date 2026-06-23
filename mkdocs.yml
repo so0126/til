@@ -17,6 +17,9 @@ theme:
     - search.highlight
     - search.suggest
 
+extra_css:
+  - assets/css/custom.css
+
 plugins:
   - search:
       lang: ko

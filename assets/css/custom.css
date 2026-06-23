@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'Kkukkukk';
+  src: url('../fonts/MemomentKkukkukk.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IM Hyemin';
+  src: url('../fonts/IM_Hyemin-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IM Hyemin';
+  src: url('../fonts/IM_Hyemin-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* 꾸미기용 — 사이트 제목, 헤더, 홈 타이틀 */
+.md-header__title,
+.md-nav__title,
+.til-hero h1,
+.md-typeset h1 {
+  font-family: 'Kkukkukk', sans-serif;
+}
+
+/* 본문용 — 전체 콘텐츠 영역 */
+body,
+.md-typeset,
+.md-content,
+.md-nav__item,
+.til-card,
+.til-filter {
+  font-family: 'IM Hyemin', sans-serif;
+}

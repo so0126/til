@@ -6,6 +6,10 @@ import yaml
 os.makedirs("docs", exist_ok=True)
 shutil.copy("README.md", "docs/about.md")
 
+# 폰트 및 CSS 복사
+if os.path.exists("assets"):
+    shutil.copytree("assets", "docs/assets", dirs_exist_ok=True)
+
 folder_map = [
     ("정처기", "01 정처기"),
     ("코테", "02 코테"),
