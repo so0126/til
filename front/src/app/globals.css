@@ -1104,11 +1104,36 @@ body {
   /* 검색 필터 - 모바일도 가로 한 줄 유지 */
   .date-quick-row { flex-wrap: wrap; }
   .cat-buttons { flex-wrap: wrap; }
-  /* 달력: 라벨 숨기고 input 작게 해서 한 줄 */
-  .date-row { flex-wrap: nowrap; gap: 4px; align-items: center; }
-  .date-row label { display: none; }
-  .date-input { font-size: 0.75rem; padding: 5px 4px; min-width: 0; flex: 1; }
-  .date-sep { flex-shrink: 0; }
+  /* 달력: 알약 버튼처럼 압축해서 한 줄 유지 */
+  .date-row {
+    flex-wrap: nowrap;
+    gap: 6px;
+    align-items: center;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+  .date-row::-webkit-scrollbar { display: none; }
+  .date-row label {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .date-input {
+    font-size: 0.82rem;
+    padding: 6px 10px;
+    min-width: 0;
+    flex: 0 0 auto;
+    width: auto;
+    border-radius: 20px;
+    line-height: 1.2;
+  }
+  .date-sep {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+  }
 
   /* 홈 히어로 */
   .home-hero { padding: 10px 12px; }
@@ -1139,11 +1164,6 @@ body {
   .header-random-btn { font-size: 0; } /* 텍스트 숨기고 이모지만 */
   .header-random-btn::before { content: '🎲'; font-size: 1rem; }
   .header-dark-btn { font-size: 1.05rem; }
-
-  /* 날짜 input 풀너비 */
-  .date-input { width: 100%; box-sizing: border-box; font-size: 0.88rem; }
-  .date-row { flex-direction: column; align-items: stretch; gap: 6px; }
-  .date-sep { text-align: center; }
 
   /* 사이드바 */
   .profile-card .profile-name { font-size: 1rem; }
