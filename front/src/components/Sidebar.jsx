@@ -16,8 +16,31 @@ function groupByYearMonth(posts) {
   return map;
 }
 
+const CONFETTI = ['🎉','🎊','✨','🎂','🎈','⭐','🌟','💙','🎁'];
+
+function BirthdayConfetti() {
+  const pieces = Array.from({ length: 18 }, (_, i) => ({
+    id: i,
+    emoji: CONFETTI[i % CONFETTI.length],
+    left: `${5 + (i * 53) % 90}%`,
+    delay: `${(i * 0.17) % 1.8}s`,
+    duration: `${1.4 + (i * 0.11) % 0.8}s`,
+  }));
+  return (
+    <div className="birthday-confetti" aria-hidden="true">
+      {pieces.map(p => (
+        <span key={p.id} style={{ left: p.left, animationDelay: p.delay, animationDuration: p.duration }}>
+          {p.emoji}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export default function Sidebar({ categories, postsByCategory, totalPostCount, latestDate, drawerOpen, onClose }) {
   const pathname = usePathname();
+  const now = new Date();
+  const isBirthday = now.getMonth() === 11 && now.getDate() === 26;
 
   // 여러 카테고리 동시 열기 + localStorage 유지
   const [openCats,  setOpenCats]  = useState(() => {
@@ -63,11 +86,15 @@ export default function Sidebar({ categories, postsByCategory, totalPostCount, l
         <button className="drawer-close" onClick={onClose} type="button">✕</button>
 
         {/* 프로필 카드 */}
-        <div className="profile-card">
+        <div className={`profile-card${isBirthday ? ' birthday' : ''}`} style={{ position: 'relative', overflow: 'visible' }}>
+          {isBirthday && <BirthdayConfetti />}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="https://github.com/so0126.png" alt="so0126" referrerPolicy="no-referrer" />
           <div className="profile-name">so0126</div>
-          <div className="profile-bio">취업 준비 학습 기록 📚</div>
+          {isBirthday
+            ? <div className="profile-bio birthday-msg">🎂 생일 축하해요, 소영님! 🎉</div>
+            : <div className="profile-bio">취업 준비 학습 기록 📚</div>
+          }
           {latestDate && (
             <div className="profile-latest">📅 최근 업데이트: {latestDate}</div>
           )}

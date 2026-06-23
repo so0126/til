@@ -9,7 +9,18 @@ const TODAY = new Date().toISOString().slice(0, 10);
 function toDateStr(d) { return d.toISOString().slice(0, 10); }
 function addDays(date, days) { const d = new Date(date); d.setDate(d.getDate() + days); return d; }
 
-function PostCard({ post }) {
+function highlight(text, kw) {
+  if (!kw || !text) return text;
+  const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const parts = text.split(new RegExp(`(${escaped})`, 'gi'));
+  return parts.map((part, i) =>
+    part.toLowerCase() === kw.toLowerCase()
+      ? <mark key={i} className="search-highlight">{part}</mark>
+      : part
+  );
+}
+
+function PostCard({ post, keyword }) {
   const month = post.date ? post.date.slice(5, 7) : '';
   const day   = post.date ? post.date.slice(8, 10) : '';
   return (
@@ -22,7 +33,22 @@ function PostCard({ post }) {
       )}
       <div className="post-info">
         <span className="post-badge">{post.categoryIcon} {post.category}</span>
-        <div className="post-title">{post.displayTitle}</div>
+        <div className="post-title">{highlight(post.displayTitle, keyword)}</div>
+        {post.preview && (
+          <div className="post-preview">{highlight(post.preview, keyword)}</div>
+        )}
+        <div className="post-meta-row">
+          {post.tags && post.tags.length > 0 && (
+            <span className="post-tags">
+              {post.tags.slice(0, 4).map(t => (
+                <span key={t} className="post-tag">{highlight(t, keyword)}</span>
+              ))}
+            </span>
+          )}
+          {post.readingTime && (
+            <span className="post-reading-time">⏱ {post.readingTime}분</span>
+          )}
+        </div>
       </div>
     </Link>
   );
@@ -163,7 +189,7 @@ export default function HomeClient({ posts, categories }) {
       <div className="post-list">
         {filtered.length === 0
           ? <p className="empty-msg">조건에 맞는 TIL이 없어요 😢</p>
-          : filtered.map(p => <PostCard key={`${p.categorySlug}-${p.slug}`} post={p} />)
+          : filtered.map(p => <PostCard key={`${p.categorySlug}-${p.slug}`} post={p} keyword={keyword} />)
         }
       </div>
     </>
