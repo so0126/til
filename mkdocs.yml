@@ -1,14 +1,7 @@
 site_name: So0h의 TIL
 site_description: Today I Learned - 취업 준비 학습 기록
 site_url: https://so0126.github.io/til/
-docs_dir: .
-exclude_docs: |
-  .git/
-  .gitignore
-  99_Templates/
-  00 TIL 허브/
-  mkdocs.yml
-  .github/
+docs_dir: docs
 
 theme:
   name: material
