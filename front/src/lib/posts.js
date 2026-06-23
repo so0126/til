@@ -173,7 +173,12 @@ export async function getPostContent(categorySlug, slug) {
 
   const raw = fs.readFileSync(path.join(dir, file), 'utf-8');
   const { data, content } = matter(raw);
-  const processed = await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(content);
+  // Obsidian 위키링크 [[표시명|링크]] or [[링크]] → 인라인 코드로 변환
+  const cleaned = content.replace(/\[\[([^\]]+)\]\]/g, (_, inner) => {
+    const display = inner.split('|')[0].trim();
+    return '`' + display + '`';
+  });
+  const processed = await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(cleaned);
   const title = file.replace(/\.md$/, '');
   const m = DATE_RE.exec(title);
   const date = data.date || (m ? m[1] : '');

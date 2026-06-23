@@ -1100,10 +1100,19 @@ body {
   .toc-float-btn { display: flex; align-items: center; justify-content: center; }
   .post-nav { flex-direction: column; }
 
-  /* 헤더 우측 - 모바일에서 일부 숨김 */
-  .header-divider:nth-child(n+4) { display: none; }
-  .header-stat:last-of-type,
-  .header-random-btn { display: none; }
+  /* 헤더 우측 - 모바일: TOTAL/TODAY/divider 모두 숨기고 아이콘만 */
+  .header-stat,
+  .header-divider { display: none; }
+  .header-right { gap: 4px; }
+  .header-link { font-size: 0.78rem; padding: 3px 7px; }
+  .header-random-btn { font-size: 0; } /* 텍스트 숨기고 이모지만 */
+  .header-random-btn::before { content: '🎲'; font-size: 1rem; }
+  .header-dark-btn { font-size: 1rem; }
+
+  /* 날짜 input 풀너비 */
+  .date-input { width: 100%; box-sizing: border-box; }
+  .date-row { flex-direction: column; align-items: stretch; gap: 6px; }
+  .date-sep { text-align: center; }
 }
 
 @keyframes slideIn {
