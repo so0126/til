@@ -106,22 +106,22 @@ export default function MobileLayout({ children, categories, postsByCategory, st
           <div className="drawer-overlay" onClick={() => setDrawerOpen(false)} />
         )}
 
-        {/* 본문 */}
-        <div className="site-body">
-          <Sidebar
-            categories={categories}
-            postsByCategory={postsByCategory}
-            stats={stats}
-            totalPostCount={totalPostCount}
-            latestDate={latestDate}
-            drawerOpen={drawerOpen}
-            onClose={() => setDrawerOpen(false)}
-          />
-          <main className="content">
-            {children}
-          </main>
+          {/* 본문 */}
+          <div className="site-body">
+            <Sidebar
+              categories={categories}
+              postsByCategory={postsByCategory}
+              stats={stats}
+              totalPostCount={totalPostCount}
+              latestDate={latestDate}
+              drawerOpen={drawerOpen}
+              onClose={() => setDrawerOpen(false)}
+            />
+            <main className="content">
+              {children}
+            </main>
+          </div>
         </div>
-      </div>
     </div>
   );
 }
