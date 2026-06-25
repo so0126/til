@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import StatsSection from './StatsSection';
 
 const TODAY = new Date().toISOString().slice(0, 10);
 
@@ -54,7 +55,7 @@ function PostCard({ post, keyword }) {
   );
 }
 
-export default function HomeClient({ posts, categories }) {
+export default function HomeClient({ posts, categories, stats }) {
   const router = useRouter();
   const ITEMS_PER_PAGE = 8;
   const [keyword,        setKeyword]        = useState('');
@@ -142,10 +143,7 @@ export default function HomeClient({ posts, categories }) {
         <img src="https://github.com/so0126.png" alt="so0126" referrerPolicy="no-referrer" />
         <div className="home-hero-text">
           <h1>so0126의 TIL 📖</h1>
-          <p>
-            매일 배운 것을 기록하는 공간이에요
-            <span className="home-hero-note">( ˶ˆᗜˆ˵ ) ✨ 열공 중이에요!</span>
-          </p>
+          <p>매일 배운 것을 기록하는 공간이에요</p>
         </div>
       </div>
 
@@ -275,6 +273,8 @@ export default function HomeClient({ posts, categories }) {
           : pagePosts.map(p => <PostCard key={`${p.categorySlug}-${p.slug}`} post={p} keyword={keyword} />)
         }
       </div>
+
+      {stats && <StatsSection stats={stats} />}
     </>
   );
 }

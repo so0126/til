@@ -15,7 +15,7 @@ export default function HomePage() {
       totalPostCount={posts.length}
       latestDate={stats.latestDate}
     >
-      <HomeClient posts={posts} categories={CATEGORIES} />
+      <HomeClient posts={posts} categories={CATEGORIES} stats={stats} />
     </SiteLayout>
   );
 }

@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import StatsSection from './StatsSection';
 
 function groupByYearMonth(posts) {
   const map = {};
@@ -122,6 +121,7 @@ export default function Sidebar({ categories, postsByCategory, stats, totalPostC
             </Link>
           </div>
 
+          {/* 기록 조개 아카이브 */}
           <div className="acc-item">
             <Link
               href="/shells"
@@ -129,7 +129,7 @@ export default function Sidebar({ categories, postsByCategory, stats, totalPostC
               style={{ display: 'flex', textDecoration: 'none' }}
               onClick={onClose}
             >
-              🐚 기록 조개
+              🐚 기록 조개 보관함
             </Link>
           </div>
 
@@ -227,7 +227,7 @@ export default function Sidebar({ categories, postsByCategory, stats, totalPostC
           })}
         </nav>
 
-        <StatsSection stats={stats} />
+        <div className="sidebar-footer-note">( ˶ˆᗜˆ˵ ) ✨ 열공 중이에요!</div>
       </aside>
     </>
   );
