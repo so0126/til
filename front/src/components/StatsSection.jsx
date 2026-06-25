@@ -22,11 +22,11 @@ function buildShellCells(activityCells) {
   return cells;
 }
 
-export default function StatsSection({ stats }) {
+export default function StatsSection({ stats, monthLabel: monthLabelProp }) {
   const { total, monthCount, latestDate, monthActivityCells, monthActivityMax, monthRecordDays } = stats;
   const now = new Date();
   const months = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
-  const monthLabel = months[now.getMonth()];
+  const monthLabel = monthLabelProp ?? months[now.getMonth()];
   const shellCells = buildShellCells(monthActivityCells || []);
 
   return (
@@ -76,12 +76,12 @@ export default function StatsSection({ stats }) {
             <span className="stats-num">{monthCount}</span>
             <span className="stats-label">이번 달 글</span>
           </div>
-          {latestDate && (
-            <div className="stats-item">
-              <span className="stats-num" style={{ fontSize: '0.85rem' }}>{latestDate.slice(5)}</span>
-              <span className="stats-label">마지막 작성</span>
-            </div>
-          )}
+          <div className="stats-item">
+            <span className="stats-num" style={{ fontSize: latestDate ? '0.85rem' : '0.72rem' }}>
+              {latestDate ? latestDate.slice(5) : '작성한 글이 없어요'}
+            </span>
+            <span className="stats-label">마지막 작성</span>
+          </div>
         </div>
       </div>
     </div>
