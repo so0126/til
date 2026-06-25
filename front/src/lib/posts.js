@@ -21,10 +21,10 @@ async function applyShikiHighlighting(html) {
     try {
       const highlighted = await codeToHtml(code, {
         lang,
-        theme: 'github-light',
+        themes: { light: 'github-light', dark: 'github-dark' },
+        defaultColor: false,
         transformers: [{
           pre(node) {
-            // 배경은 CSS에서 제어하므로 shiki inline style 제거
             if (node.properties) delete node.properties.style;
             node.properties['data-lang'] = lang;
           },
@@ -226,6 +226,53 @@ export function getSiteStats(posts) {
     monthActivityMax,
     monthRecordDays,
   };
+}
+
+export function getShellArchive(posts) {
+  const now = new Date();
+  const thisMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
+  const postCountByDate = {};
+  for (const p of posts) {
+    if (!p.date) continue;
+    postCountByDate[p.date] = (postCountByDate[p.date] || 0) + 1;
+  }
+
+  const monthSet = new Set();
+  for (const p of posts) {
+    if (!p.date) continue;
+    const ym = p.date.slice(0, 7);
+    if (ym < thisMonth) monthSet.add(ym);
+  }
+
+  // 이전 달은 기록이 없어도 항상 포함 (빈 조개)
+  const prevDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const prevMonth = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
+  monthSet.add(prevMonth);
+
+  const sortedMonths = [...monthSet].sort().reverse();
+  let cumulativeTotal = posts.filter(p => p.date).length;
+
+  return sortedMonths.map(ym => {
+    const [y, m] = ym.split('-').map(Number);
+    const daysInMonth = new Date(y, m, 0).getDate();
+    const lastDayOfMonth = `${ym}-${String(daysInMonth).padStart(2, '0')}`;
+    const activityCells = [];
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = `${ym}-${String(d).padStart(2, '0')}`;
+      activityCells.push({ date, count: postCountByDate[date] || 0 });
+    }
+    const activityMax = Math.max(...activityCells.map(c => c.count), 1);
+    const recordDays = activityCells.filter(c => c.count > 0).length;
+    const postCount = activityCells.reduce((s, c) => s + c.count, 0);
+    const lastDate = activityCells.filter(c => c.count > 0).map(c => c.date).sort().reverse()[0] || '';
+    const total = cumulativeTotal;
+    cumulativeTotal -= postCount;
+    return {
+      monthKey: ym, year: y, month: m,
+      recordDays, postCount, activityCells, activityMax, lastDate, total,
+    };
+  });
 }
 
 export async function getPostContent(categorySlug, slug) {
